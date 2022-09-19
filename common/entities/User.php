@@ -1,6 +1,6 @@
 <?php
 
-namespace common\models;
+namespace common\entities;
 
 use Yii;
 use yii\base\NotSupportedException;
@@ -29,6 +29,17 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
+    public static function signup(string $username, string $email, string $password) : self
+    {
+        $user = new self();
+        $user->username = $username;
+        $user->email = $email;
+        $user->setPassword($password);
+        $user->generateAuthKey();
+        $user->generateEmailVerificationToken();
+
+        return $user;
+    }
 
     /**
      * {@inheritdoc}
