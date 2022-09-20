@@ -2,5 +2,5 @@
 
 return [
     'cookieValidationKey' => '',
-    'cookieDomain' => '.shop.dev',
+    'cookieDomain' => '',
 ];
