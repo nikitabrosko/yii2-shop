@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\services\LoginService;
 use frontend\forms\ResendVerificationEmailForm;
 use frontend\services\auth\PasswordResetService;
 use frontend\services\auth\SignupService;
@@ -26,14 +27,19 @@ class SiteController extends Controller
     private $passwordResetService;
     private $signupService;
     private $contactService;
+    private $loginService;
 
-    public function __construct($id, $module, PasswordResetService $passwordResetService,
-                                SignupService $signupService, ContactService $contactService, $config = [])
+    public function __construct($id, $module,
+                                PasswordResetService $passwordResetService,
+                                SignupService $signupService,
+                                ContactService $contactService,
+                                LoginService $loginService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->passwordResetService = $passwordResetService;
         $this->signupService = $signupService;
         $this->contactService = $contactService;
+        $this->loginService = $loginService;
     }
 
     /**
@@ -104,15 +110,16 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        $form = new LoginForm();
+
+        if ($form->load(Yii::$app->request->post()) && $this->loginService->login($form)) {
             return $this->goBack();
         }
 
-        $model->password = '';
+        $form->password = '';
 
         return $this->render('login', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 
