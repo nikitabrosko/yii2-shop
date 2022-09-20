@@ -25,9 +25,9 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
-    const STATUS_ACTIVE = 10;
+    public const STATUS_DELETED = 0;
+    public const STATUS_INACTIVE = 9;
+    public const STATUS_ACTIVE = 10;
 
     public static function signup(string $username, string $email, string $password) : self
     {
@@ -39,6 +39,11 @@ class User extends ActiveRecord implements IdentityInterface
         $user->generateEmailVerificationToken();
 
         return $user;
+    }
+
+    public function isActive() : bool
+    {
+        return $this->status == self::isActive();
     }
 
     /**
