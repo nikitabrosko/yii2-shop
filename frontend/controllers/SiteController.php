@@ -2,22 +2,22 @@
 
 namespace frontend\controllers;
 
-use common\services\LoginService;
-use frontend\forms\ResendVerificationEmailForm;
-use frontend\services\auth\PasswordResetService;
-use frontend\services\auth\SignupService;
-use frontend\services\contact\ContactService;
+use shop\services\auth\LoginService;
+use shop\forms\auth\ResendVerificationEmailForm;
+use shop\services\auth\PasswordResetService;
+use shop\services\auth\SignupService;
+use shop\services\contact\ContactService;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\forms\LoginForm;
-use frontend\forms\PasswordResetRequestForm;
-use frontend\forms\ResetPasswordForm;
-use frontend\forms\SignupForm;
-use frontend\forms\ContactForm;
+use shop\forms\auth\LoginForm;
+use shop\forms\auth\PasswordResetRequestForm;
+use shop\forms\auth\ResetPasswordForm;
+use shop\forms\auth\SignupForm;
+use shop\forms\contact\ContactForm;
 
 /**
  * Site controller

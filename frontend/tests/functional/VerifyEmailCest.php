@@ -62,7 +62,7 @@ class VerifyEmailCest
         $I->seeRecord('common\models\User', [
            'username' => 'test.test',
            'email' => 'test@mail.com',
-           'status' => \common\entities\User::STATUS_ACTIVE
+           'status' => \shop\entities\User::STATUS_ACTIVE
         ]);
     }
 }
