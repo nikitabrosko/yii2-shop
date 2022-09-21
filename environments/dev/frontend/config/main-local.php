@@ -2,6 +2,17 @@
 
 $config = [
     'components' => [
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'vk' => [
+                    'class' => 'yii\authclient\clients\VKontakte',
+                    'clientId' => '51431883',
+                    'clientSecret' => 'eSuSBrlv4Rpt4GJ12ZSg',
+                ],
+                // etc.
+            ],
+        ]
     ],
 ];
 

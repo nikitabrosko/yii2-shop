@@ -2,5 +2,5 @@
 
 return [
     'cookieValidationKey' => '',
-    'cookieDomain' => '',
+    'cookieDomain' => 'yii2-test-shop',
 ];

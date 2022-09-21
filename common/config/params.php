@@ -6,7 +6,7 @@ return [
     'senderName' => 'Example.com mailer',
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
-    'cookieDomain' => '.example.com',
-    'frontendHostInfo' => 'http://example.com',
-    'backendHostInfo' => 'http://backend.example.com',
+    'cookieDomain' => 'yii2-test-shop',
+    'frontendHostInfo' => 'http://yii2-test-shop',
+    'backendHostInfo' => 'http://yii2-test-shop/backend',
 ];
