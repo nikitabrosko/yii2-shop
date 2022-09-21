@@ -22,7 +22,7 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
- * @property integer $updated_at1
+ * @property integer $updated_at
  * @property string $password write-only password
  *
  * @property Network[] $networks
@@ -32,6 +32,8 @@ class User extends ActiveRecord implements IdentityInterface
     public const STATUS_DELETED = 0;
     public const STATUS_INACTIVE = 9;
     public const STATUS_ACTIVE = 10;
+
+    public $networks;
 
     public static function signup(string $username, string $email, string $password) : self
     {
@@ -50,9 +52,7 @@ class User extends ActiveRecord implements IdentityInterface
         $user = new self();
         $user->status = self::STATUS_ACTIVE;
         $user->generateAuthKey();
-        $user->networks = [
-            Network::create($network, $identity)
-        ];
+        $user->networks = [Network::create($network, $identity)];
 
         return $user;
     }
@@ -84,7 +84,7 @@ class User extends ActiveRecord implements IdentityInterface
             TimestampBehavior::className(),
             [
                 'class' => SaveRelationsBehavior::class,
-                'relation' => ['networks'],
+                'relations' => ['networks'],
             ],
         ];
     }
