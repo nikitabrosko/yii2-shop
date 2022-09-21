@@ -1,15 +1,17 @@
 <?php
 
-namespace shop\entities;
+namespace shop\entities\user;
 
+use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
- * User model
+ * user model
  *
  * @property integer $id
  * @property string $username
@@ -22,6 +24,8 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at1
  * @property string $password write-only password
+ *
+ * @property Network[] $networks
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -46,6 +50,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->status == self::isActive();
     }
 
+    public function getNetworks() : ActiveQuery
+    {
+        return $this->hasMany(Network::class, ['user_id' => 'id']);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -61,6 +70,17 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             TimestampBehavior::className(),
+            [
+                'class' => SaveRelationsBehavior::class,
+                'relation' => ['networks'],
+            ],
+        ];
+    }
+
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
         ];
     }
 
