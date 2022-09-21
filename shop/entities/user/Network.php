@@ -10,7 +10,6 @@ use yii\db\ActiveRecord;
  * @property string $identity
  * @property string $network
  */
-
 class Network extends ActiveRecord
 {
     public static function create($network, $identity) : self
