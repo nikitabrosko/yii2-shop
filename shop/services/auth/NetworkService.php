@@ -14,6 +14,16 @@ class NetworkService
 
         $user = User::signupByNetwork($network, $identity);
 
-        return $user->save(false) ? $user : null;
+        if (!$user->save()) {
+            throw new \DomainException('Sorry, we are unable to sign you up.');
+        }
+
+        foreach ($user->networks as $network) {
+            $network->user_id = $user->getId();
+
+            $network->save();
+        }
+
+        return $user;
     }
 }
