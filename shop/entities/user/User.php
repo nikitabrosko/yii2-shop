@@ -33,8 +33,6 @@ class User extends ActiveRecord implements IdentityInterface
     public const STATUS_INACTIVE = 9;
     public const STATUS_ACTIVE = 10;
 
-    public $networks;
-
     public static function signup(string $username, string $email, string $password) : self
     {
         $user = new self();
@@ -55,6 +53,20 @@ class User extends ActiveRecord implements IdentityInterface
         $user->networks = [Network::create($network, $identity)];
 
         return $user;
+    }
+
+    public function attachNetwork($network, $identity): void
+    {
+        $networks = $this->getNetworks()->all();
+
+        foreach ($networks as $current) {
+            if ($current->isFor($network, $identity)) {
+                throw new \DomainException('Network is already attached.');
+            }
+        }
+
+        $networks[] = Network::create($network, $identity);
+        $this->networks = $networks;
     }
 
     public function isActive() : bool
