@@ -1,11 +1,11 @@
 <?php
 
-namespace frontend\services\auth;
+namespace shop\services\auth;
 
-use frontend\forms\ResendVerificationEmailForm;
+use shop\forms\auth\ResendVerificationEmailForm;
 use Yii;
-use common\entities\User;
-use frontend\forms\SignupForm;
+use shop\entities\User;
+use shop\forms\auth\SignupForm;
 use yii\base\InvalidArgumentException;
 use yii\mail\MailerInterface;
 

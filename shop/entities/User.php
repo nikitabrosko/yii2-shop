@@ -1,6 +1,6 @@
 <?php
 
-namespace common\entities;
+namespace shop\entities;
 
 use Yii;
 use yii\base\NotSupportedException;
@@ -20,7 +20,7 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
- * @property integer $updated_at
+ * @property integer $updated_at1
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface

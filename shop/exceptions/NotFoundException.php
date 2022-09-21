@@ -1,6 +1,6 @@
 <?php
 
-namespace common\exceptions;
+namespace shop\exceptions;
 
 class NotFoundException extends \DomainException
 {

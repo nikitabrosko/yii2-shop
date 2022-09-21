@@ -1,10 +1,10 @@
 <?php
 
-namespace common\services;
+namespace shop\services\auth;
 
-use common\entities\User;
-use common\forms\LoginForm;
-use common\exceptions\NotFoundException;
+use shop\entities\User;
+use shop\forms\auth\LoginForm;
+use shop\exceptions\NotFoundException;
 use Yii;
 
 class LoginService
