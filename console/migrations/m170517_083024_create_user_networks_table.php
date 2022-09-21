@@ -19,7 +19,7 @@ class m170517_083024_create_user_networks_table extends Migration
 
         $this->createIndex('{{%idx-user_networks-user_id}}', '{{%user_networks}}', 'user_id');
 
-        $this->addForeignKey('{{%fk-user_networks-user_id}}', '{{%user_networks}}', 'user_id', '{{%users}}', 'id', 'CASCADE');
+        $this->addForeignKey('{{%fk-user_networks-user_id}}', '{{%user_networks}}', 'user_id', '{{%user}}', 'id', 'CASCADE');
     }
 
     public function down()
