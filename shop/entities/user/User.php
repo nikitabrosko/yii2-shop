@@ -33,6 +33,17 @@ class User extends ActiveRecord implements IdentityInterface
     public const STATUS_INACTIVE = 9;
     public const STATUS_ACTIVE = 10;
 
+    public static function create(string $username, string $email, string $password): self
+    {
+        $user = new self();
+        $user->username = $username;
+        $user->email = $email;
+        $user->setPassword(!empty($password) ? $password : Yii::$app->security->generateRandomString());
+        $user->status = self::STATUS_ACTIVE;
+        $user->generateAuthKey();
+        return $user;
+    }
+
     public static function signup(string $username, string $email, string $password) : self
     {
         $user = new self();
@@ -53,6 +64,13 @@ class User extends ActiveRecord implements IdentityInterface
         $user->networks = [Network::create($network, $identity)];
 
         return $user;
+    }
+
+    public function edit(string $username, string $email)
+    {
+        $this->username = $username;
+        $this->email = $email;
+        $this->updated_at = time();
     }
 
     public function attachNetwork($network, $identity): void
