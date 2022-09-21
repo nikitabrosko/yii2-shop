@@ -5,7 +5,7 @@ namespace shop\forms\auth;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
 use Yii;
-use shop\entities\User;
+use shop\entities\user\User;
 
 /**
  * Password reset form

@@ -4,7 +4,7 @@ namespace shop\services\auth;
 
 use shop\forms\auth\ResendVerificationEmailForm;
 use Yii;
-use shop\entities\User;
+use shop\entities\user\User;
 use shop\forms\auth\SignupForm;
 use yii\base\InvalidArgumentException;
 use yii\mail\MailerInterface;
@@ -34,7 +34,7 @@ class SignupService
         if (!$this
             ->mailer
             ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
+                ['html' => 'auth/signup/confirm-html', 'text' => 'auth/signup/confirm-text'],
                 ['user' => $user]
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
@@ -60,7 +60,7 @@ class SignupService
         if (!$this
             ->mailer
             ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
+                ['html' => 'auth/signup/confirm-html', 'text' => 'auth/signup/confirm-text'],
                 ['user' => $user]
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])

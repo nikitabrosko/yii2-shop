@@ -2,7 +2,7 @@
 
 namespace shop\services\auth;
 
-use shop\entities\User;
+use shop\entities\user\User;
 use shop\forms\auth\LoginForm;
 use shop\exceptions\NotFoundException;
 use Yii;
@@ -44,7 +44,7 @@ class LoginService
         $user = User::findByUsername($username);
 
         if (!$user) {
-            throw new NotFoundException('User not found.');
+            throw new NotFoundException('user not found.');
         }
 
         return $user;
