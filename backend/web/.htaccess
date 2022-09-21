@@ -7,8 +7,8 @@
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteCond %{REQUEST_FILENAME} !-d
 
-# otherwise forward it to index.php
-#RewriteRule . index.php
+# otherwise forward it to cabinet.php
+#RewriteRule . cabinet.php
 
 
     # use mod_rewrite for pretty URL support
@@ -16,7 +16,7 @@
     # If a directory or a file exists, use the request directly
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    # Otherwise forward the request to index.php
+    # Otherwise forward the request to cabinet.php
     RewriteRule . index.php
 
     # ...other settings...
