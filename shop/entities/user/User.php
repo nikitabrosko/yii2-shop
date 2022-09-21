@@ -45,6 +45,18 @@ class User extends ActiveRecord implements IdentityInterface
         return $user;
     }
 
+    public static function signupByNetwork($network, $identity) : self
+    {
+        $user = new self();
+        $user->status = self::STATUS_ACTIVE;
+        $user->generateAuthKey();
+        $user->networks = [
+            Network::create($network, $identity)
+        ];
+
+        return $user;
+    }
+
     public function isActive() : bool
     {
         return $this->status == self::isActive();
