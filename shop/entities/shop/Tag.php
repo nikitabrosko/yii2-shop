@@ -42,11 +42,11 @@ class Tag extends ActiveRecord
 
     public function delete() : int
     {
-        if (!$id = parent::delete()) {
+        if (!parent::delete()) {
             throw new \DomainException('Tag removing error.');
         }
 
-        return $id;
+        return true;
     }
 
     public static function tableName() : string

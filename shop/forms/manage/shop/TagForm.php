@@ -15,8 +15,8 @@ class TagForm extends Model
     public function __construct(Tag $tag = null, $config = [])
     {
         if ($tag) {
-            $this->name = $tag->name ?? null;
-            $this->slug = $tag->slug ?? null;
+            $this->name = $tag->name ?: null;
+            $this->slug = $tag->slug ?: null;
             $this->_tag = $tag;
         }
 
@@ -32,6 +32,4 @@ class TagForm extends Model
             [['name', 'slug'], 'unique', 'targetClass' => Tag::class, 'filter' => $this->_tag ? ['<>', 'id', $this->_tag->id] : null],
         ];
     }
-
-
 }
