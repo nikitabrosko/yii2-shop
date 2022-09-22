@@ -20,7 +20,7 @@ class TagManageService
         return $tag;
     }
 
-    public function edit($id, TagForm $form) : Tag
+    public function edit($id, TagForm $form)
     {
         $tag = Tag::findOne(['id' => $id]);
 
@@ -30,8 +30,6 @@ class TagManageService
         );
 
         $tag->save();
-
-        return $tag;
     }
 
     public function remove($id)
