@@ -34,6 +34,7 @@ use yii\web\UploadedFile;
  * @property TagAssignment[] $tagAssignments
  * @property RelatedAssignment[] $relatedAssignments
  * @property Modification[] $modifications
+ * @property Review[] $reviews
  */
 class Product extends ActiveRecord
 {
@@ -128,14 +129,12 @@ class Product extends ActiveRecord
     {
         $modifications = $this->modifications;
 
-        foreach ($modifications as $i => $modification) {
-            if ($modification->isIdEqualTo($id)) {
+        $this->doWithForeach($modifications, $id,
+            function(Modification $modification, array $modifications) use ($code, $name, $price)
+            {
                 $modification->edit($code, $name, $price);
                 $this->modifications = $modifications;
-
-                return;
-            }
-        }
+            });
 
         throw new NotFoundException('Modification not found.');
     }
@@ -312,6 +311,100 @@ class Product extends ActiveRecord
         throw new NotFoundException('Assignment not found.');
     }
 
+    public function addReview($userId, $vote, $text)
+    {
+        $reviews = $this->reviews;
+
+        $reviews[] = Review::create($userId, $vote, $text);
+
+        $this->setReviews($reviews);
+    }
+    
+    public function editReview($id, $vote, $text)
+    {
+        $reviews = $this->reviews;
+
+        $this->doWithForeach($reviews, $id,
+            function(Review $review, array $reviews) use ($vote, $text)
+            {
+                $review->edit($vote, $text);
+                $this->setReviews($reviews);
+            });
+
+        throw new NotFoundException('Review not found.');
+    }
+
+    public function activateReview($id)
+    {
+        $reviews = $this->reviews;
+
+        $this->doWithForeach($reviews, $id,
+            function(Review $review, array $reviews)
+            {
+                $review->activate();
+                $this->setReviews($reviews);
+            });
+
+        throw new NotFoundException('Review not found.');
+    }
+
+    public function draftReview($id)
+    {
+        $reviews = $this->reviews;
+
+        $this->doWithForeach($reviews, $id,
+            function(Review $review, array $reviews)
+            {
+                $review->draft();
+                $this->setReviews($reviews);
+            });
+
+        throw new NotFoundException('Review not found.');
+    }
+
+    private function doWithForeach($objects, $id, callable $callback)
+    {
+        foreach ($objects as $object) {
+            if ($object->isIdEqualTo($id)) {
+                $callback($object, $objects);
+
+                return;
+            }
+        }
+    }
+
+    public function removeReview($id)
+    {
+        $reviews = $this->reviews;
+
+        foreach ($reviews as $i => $review) {
+            if ($review->isIdEqualTo($id)) {
+                unset($reviews[$i]);
+                $this->setReviews($reviews);
+
+                return;
+            }
+        }
+
+        throw new NotFoundException('Review not found.');
+    }
+
+    public function setReviews(array $reviews)
+    {
+        $amount = 0;
+        $total = 0;
+
+        foreach ($reviews as $review) {
+            if ($review->isActive()) {
+                $amount++;
+                $total += $review->getRating();
+            }
+        }
+
+        $this->reviews = $reviews;
+        $this->rating = $amount ? $total / $amount : null;
+    }
+
     public function getBrand() : ActiveQuery
     {
         return $this->hasOne(Brand::class, ['id' => 'brand_id']);
@@ -349,7 +442,12 @@ class Product extends ActiveRecord
 
     public function getModifications() : ActiveQuery
     {
-        return $this->hasOne(Modification::class, ['product_id' => 'id'])->orderBy('sort');
+        return $this->hasOne(Modification::class, ['product_id' => 'id']);
+    }
+
+    public function getReviews() : ActiveQuery
+    {
+        return $this->hasOne(Review::class, ['product_id' => 'id']);
     }
 
     public static function tableName() : string
@@ -364,7 +462,7 @@ class Product extends ActiveRecord
             [
                 'class' => SaveRelationsBehavior::class,
                 'relations' => ['categoryAssignments', 'tagAssignments',
-                    'relatedAssignments', 'values', 'photos', 'modifications'],
+                    'relatedAssignments', 'values', 'photos', 'modifications', 'reviews'],
             ],
         ];
     }
