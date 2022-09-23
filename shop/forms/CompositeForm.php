@@ -31,10 +31,7 @@ abstract class CompositeForm extends Model
 
         foreach ($this->forms as $name => $form) {
             if (is_array($form)) {
-                foreach ($form as $itemName => $itemForm) {
-                    $innerNames = ArrayHelper::getValue($attributeNames, $itemName);
-                    $result = $itemForm->validate($innerNames, $clearErrors) && $result;
-                }
+                $result = Model::validateMultiple($form) && $result;
             } else {
                 $innerNames = ArrayHelper::getValue($attributeNames, $name);
                 $result = $form->validate($innerNames, $clearErrors) && $result;
