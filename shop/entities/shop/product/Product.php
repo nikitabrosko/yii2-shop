@@ -50,6 +50,14 @@ class Product extends ActiveRecord
         return $product;
     }
 
+    public function edit($brandId = null, $code = null, $name = null, Meta $meta = null)
+    {
+        if ($brandId) $this->brand_id = $brandId;
+        if ($code) $this->code = $code;
+        if ($name) $this->name = $name;
+        if ($meta) $this->meta = $meta;
+    }
+
     public function setPrice($new, $old)
     {
         $this->price_new = $new;
