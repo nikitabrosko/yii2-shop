@@ -129,12 +129,29 @@ class Product extends ActiveRecord
     {
         $modifications = $this->modifications;
 
-        $this->doWithForeach($modifications, $id,
+        if (!$this->doWithForeach($modifications, $id,
             function(Modification $modification, array $modifications) use ($code, $name, $price)
             {
                 $modification->edit($code, $name, $price);
                 $this->modifications = $modifications;
-            });
+            })) {
+            throw new NotFoundException('Modification not found.');
+        }
+    }
+
+
+    public function removeModification($id): void
+    {
+        $modifications = $this->modifications;
+
+        foreach ($modifications as $i => $modification) {
+            if ($modification->isIdEqualTo($id)) {
+                unset($modifications[$i]);
+                $this->modifications = $modifications;
+
+                return;
+            }
+        }
 
         throw new NotFoundException('Modification not found.');
     }
@@ -295,7 +312,7 @@ class Product extends ActiveRecord
         $this->relatedAssignments = $assignments;
     }
 
-    public function revokeRelatedProducts($id)
+    public function revokeRelatedProduct($id)
     {
         $assignments = $this->relatedAssignments;
 
@@ -324,53 +341,55 @@ class Product extends ActiveRecord
     {
         $reviews = $this->reviews;
 
-        $this->doWithForeach($reviews, $id,
+        if (!$this->doWithForeach($reviews, $id,
             function(Review $review, array $reviews) use ($vote, $text)
             {
                 $review->edit($vote, $text);
                 $this->setReviews($reviews);
-            });
-
-        throw new NotFoundException('Review not found.');
+            })) {
+            throw new NotFoundException('Review not found.');
+        }
     }
 
     public function activateReview($id)
     {
         $reviews = $this->reviews;
 
-        $this->doWithForeach($reviews, $id,
+        if (!$this->doWithForeach($reviews, $id,
             function(Review $review, array $reviews)
             {
                 $review->activate();
                 $this->setReviews($reviews);
-            });
-
-        throw new NotFoundException('Review not found.');
+            })) {
+            throw new NotFoundException('Review not found.');
+        }
     }
 
     public function draftReview($id)
     {
         $reviews = $this->reviews;
 
-        $this->doWithForeach($reviews, $id,
+        if (!$this->doWithForeach($reviews, $id,
             function(Review $review, array $reviews)
             {
                 $review->draft();
                 $this->setReviews($reviews);
-            });
-
-        throw new NotFoundException('Review not found.');
+            })) {
+            throw new NotFoundException('Review not found.');
+        }
     }
 
-    private function doWithForeach($objects, $id, callable $callback)
+    private function doWithForeach($objects, $id, callable $callback) : bool
     {
         foreach ($objects as $object) {
             if ($object->isIdEqualTo($id)) {
                 $callback($object, $objects);
 
-                return;
+                return true;
             }
         }
+
+        return false;
     }
 
     public function removeReview($id)
