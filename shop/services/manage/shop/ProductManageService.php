@@ -11,6 +11,7 @@ use shop\exceptions\NotFoundException;
 use shop\forms\manage\shop\product\CategoriesForm;
 use shop\forms\manage\shop\product\PhotosForm;
 use shop\forms\manage\shop\product\ProductCreateForm;
+use shop\forms\manage\shop\product\ProductEditForm;
 use shop\forms\manage\TransactionManager;
 
 class ProductManageService
@@ -24,9 +25,7 @@ class ProductManageService
 
     public function create(ProductCreateForm $form) : Product
     {
-        if (!$brand = Brand::findOne(['id' => $form->brandId])) {
-            throw new NotFoundException('Brand not found.');
-        }
+        $brand = $this->getBrand($form->brandId);
 
         $category = $this->getCategory($form->categories->main);
 
@@ -58,28 +57,37 @@ class ProductManageService
             $product->addPhoto($file);
         }
 
-        foreach ($form->tags->existing as $tagId) {
-            if (!$tag = Tag::findOne(['id' => $tagId])) {
-                throw new NotFoundException('Tag not found.');
-            }
-
-            $product->assignTag($tag->id);
-        }
-
-        $this->transactionManager->wrap(function() use ($form, $product) {
-            foreach ($form->tags->newNames as $tagName) {
-                if (!$tag = Tag::findOne(['name' => $tagName])) {
-                    $tag = Tag::create($tagName, $tagName);
-                    $tag->save();
-                }
-
-                $product->assignTag($tag->id);
-            }
-        });
+        $this->assignTags($form, $product);
 
         $product->save();
 
         return $product;
+    }
+
+    public function edit($id, ProductEditForm $form)
+    {
+        $product = $this->getProduct($id);
+        $brand = $this->getBrand($form->brandId);
+
+        $product->edit(
+            $brand->id,
+            $form->code,
+            $form->name,
+            new Meta(
+                $form->meta->title,
+                $form->meta->description,
+                $form->meta->keywords
+            )
+        );
+
+        foreach ($form->values as $value) {
+            $product->setValue($value->id, $value->value);
+        }
+
+        $product->revokeTags();
+        $this->assignTags($form, $product);
+
+        $product->save();
     }
 
     public function changeCategories($id, CategoriesForm $form)
@@ -145,6 +153,25 @@ class ProductManageService
         $product->delete();
     }
 
+    private function assignTags($form, $product)
+    {
+        foreach ($form->tags->existing as $tagId) {
+            $tag = $this->getTag($tagId);
+            $product->assignTag($tag->id);
+        }
+
+        $this->transactionManager->wrap(function() use ($form, $product) {
+            foreach ($form->tags->newNames as $tagName) {
+                if (!$tag = Tag::findOne(['name' => $tagName])) {
+                    $tag = Tag::create($tagName, $tagName);
+                    $tag->save();
+                }
+
+                $product->assignTag($tag->id);
+            }
+        });
+    }
+
     private function getCategory($id) : Category
     {
         if (!$category = Category::findOne(['id' => $id])) {
@@ -161,5 +188,23 @@ class ProductManageService
         }
 
         return $product;
+    }
+
+    private function getBrand($id) : Brand
+    {
+        if (!$brand = Brand::findOne(['id' => $id])) {
+            throw new NotFoundException('Brand not found.');
+        }
+
+        return $brand;
+    }
+
+    private function getTag($id) : Tag
+    {
+        if (!$tag = Tag::findOne(['id' => $id])) {
+            throw new NotFoundException('Tag not found.');
+        }
+
+        return $tag;
     }
 }
