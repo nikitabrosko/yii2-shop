@@ -9,6 +9,7 @@ use shop\entities\shop\product\Product;
 use shop\entities\shop\Tag;
 use shop\exceptions\NotFoundException;
 use shop\forms\manage\shop\product\CategoriesForm;
+use shop\forms\manage\shop\product\ModificationForm;
 use shop\forms\manage\shop\product\PhotosForm;
 use shop\forms\manage\shop\product\ProductCreateForm;
 use shop\forms\manage\shop\product\ProductEditForm;
@@ -142,6 +143,60 @@ class ProductManageService
         $product = $this->getProduct($id);
 
         $product->removePhoto($photoId);
+
+        $product->save();
+    }
+
+    public function addRelatedProduct($id, $otherId): void
+    {
+        $product = $this->getProduct($id);
+        $other = $this->getProduct($otherId);
+        $product->assignRelatedProduct($other->id);
+
+        $product->save();
+    }
+
+    public function removeRelatedProduct($id, $otherId): void
+    {
+        $product = $this->getProduct($id);
+        $other = $this->getProduct($otherId);
+        $product->revokeRelatedProduct($other->id);
+
+        $product->save();
+    }
+
+    public function addModification($id, ModificationForm $form): void
+    {
+        $product = $this->getProduct($id);
+
+        $product->addModification(
+            $form->code,
+            $form->name,
+            $form->price
+        );
+
+        $product->save();
+    }
+
+    public function editModification($id, $modificationId, ModificationForm $form): void
+    {
+        $product = $this->getProduct($id);
+
+        $product->editModification(
+            $modificationId,
+            $form->code,
+            $form->name,
+            $form->price
+        );
+
+        $product->save();
+    }
+
+    public function removeModification($id, $modificationId): void
+    {
+        $product = $this->getProduct($id);
+
+        $product->removeModification($modificationId);
 
         $product->save();
     }
