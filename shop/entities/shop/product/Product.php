@@ -7,6 +7,7 @@ use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\shop\Brand;
 use shop\entities\shop\Category;
+use shop\exceptions\AlreadyExistsException;
 use shop\exceptions\NotFoundException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -32,6 +33,7 @@ use yii\web\UploadedFile;
  * @property Photo[] $photos
  * @property TagAssignment[] $tagAssignments
  * @property RelatedAssignment[] $relatedAssignments
+ * @property Modification[] $modifications
  */
 class Product extends ActiveRecord
 {
@@ -95,6 +97,47 @@ class Product extends ActiveRecord
         }
 
         return Value::blank($id);
+    }
+
+    public function getModification($id) : Modification
+    {
+        foreach ($this->modifications as $modification) {
+            if ($modification->isIdEqualTo($id)) {
+                return $modification;
+            }
+        }
+
+        throw new NotFoundException('Modification not found.');
+    }
+
+    public function addModification($code, $name, $price)
+    {
+        $modifications = $this->modifications;
+
+        foreach ($modifications as $modification) {
+            if ($modification->isCodeEqualTo($code)) {
+                throw new AlreadyExistsException('Modification is already exists.');
+            }
+        }
+
+        $modifications[] = Modification::create($code, $name, $price);
+        $this->modifications = $modifications;
+    }
+
+    public function editModification($id, $code, $name, $price)
+    {
+        $modifications = $this->modifications;
+
+        foreach ($modifications as $i => $modification) {
+            if ($modification->isIdEqualTo($id)) {
+                $modification->edit($code, $name, $price);
+                $this->modifications = $modifications;
+
+                return;
+            }
+        }
+
+        throw new NotFoundException('Modification not found.');
     }
 
     public function assignCategory($id)
@@ -304,6 +347,11 @@ class Product extends ActiveRecord
         return $this->hasOne(RelatedAssignment::class, ['product_id' => 'id']);
     }
 
+    public function getModifications() : ActiveQuery
+    {
+        return $this->hasOne(Modification::class, ['product_id' => 'id'])->orderBy('sort');
+    }
+
     public static function tableName() : string
     {
         return '{{%shop_products}}';
@@ -315,7 +363,8 @@ class Product extends ActiveRecord
             MetaBehavior::class,
             [
                 'class' => SaveRelationsBehavior::class,
-                'relations' => ['categoryAssignments', 'tagAssignments', 'relatedAssignments', 'values', 'photos'],
+                'relations' => ['categoryAssignments', 'tagAssignments',
+                    'relatedAssignments', 'values', 'photos', 'modifications'],
             ],
         ];
     }
