@@ -3,9 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model shop\forms\manage\shop\BrandForm */
-/* @var $form yii\widgets\ActiveForm */
+/** @var yii\web\View $this */
+/** @var shop\forms\manage\shop\BrandForm $model */
+/** @var yii\widgets\ActiveForm $form */
 ?>
 
 <div class="brand-form">
