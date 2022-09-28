@@ -61,7 +61,7 @@ class Product extends ActiveRecord
         if ($meta) $this->meta = $meta;
     }
 
-    public function setPrice($new, $old)
+    public function updatePrice($new, $old)
     {
         $this->price_new = $new;
         $this->price_old = $old;
@@ -72,7 +72,7 @@ class Product extends ActiveRecord
         $this->category_id = $categoryId;
     }
 
-    public function setValue($id, $value)
+    public function updateValue($id, $value)
     {
         $values = $this->values;
 
@@ -138,7 +138,6 @@ class Product extends ActiveRecord
             throw new NotFoundException('Modification not found.');
         }
     }
-
 
     public function removeModification($id): void
     {
@@ -231,7 +230,7 @@ class Product extends ActiveRecord
         $photos = $this->photos;
         $photos[] = Photo::create($file);
 
-        $this->setPhotos($photos);
+        $this->updatePhotos($photos);
     }
 
     public function removePhoto($id)
@@ -241,7 +240,7 @@ class Product extends ActiveRecord
         foreach ($photos as $i => $photo) {
             if ($photo->isIdEqualTo($id)) {
                 unset($photos[$i]);
-                $this->setPhotos($photos);
+                $this->updatePhotos($photos);
 
                 return;
             }
@@ -260,10 +259,12 @@ class Product extends ActiveRecord
         $photos = $this->photos;
 
         foreach ($photos as $i => $photo) {
-            if ($photo->isIdEqualTo($id) && $prev = $photos[$i - 1] ?? null) {
-                $photos[$i] = $prev;
-                $photos[$i - 1] = $photo;
-                $this->setPhotos($photos);
+            if ($photo->isIdEqualTo($id)) {
+                if ($prev = $photos[$i - 1] ?? null) {
+                    $photos[$i - 1] = $photo;
+                    $photos[$i] = $prev;
+                    $this->updatePhotos($photos);
+                }
 
                 return;
             }
@@ -277,10 +278,12 @@ class Product extends ActiveRecord
         $photos = $this->photos;
 
         foreach ($photos as $i => $photo) {
-            if ($photo->isIdEqualTo($id) && $next = $photos[$i + 1] ?? null) {
-                $photos[$i] = $next;
-                $photos[$i + 1] = $photo;
-                $this->setPhotos($photos);
+            if ($photo->isIdEqualTo($id)) {
+                if ($next = $photos[$i + 1] ?? null) {
+                    $photos[$i] = $next;
+                    $photos[$i + 1] = $photo;
+                    $this->updatePhotos($photos);
+                }
 
                 return;
             }
@@ -289,7 +292,7 @@ class Product extends ActiveRecord
         throw new NotFoundException('Photo not found.');
     }
 
-    private function setPhotos(array $photos)
+    private function updatePhotos(array $photos)
     {
         foreach ($photos as $i => $photo) {
             $photo->setSort($i);
@@ -334,7 +337,7 @@ class Product extends ActiveRecord
 
         $reviews[] = Review::create($userId, $vote, $text);
 
-        $this->setReviews($reviews);
+        $this->updateReviews($reviews);
     }
     
     public function editReview($id, $vote, $text)
@@ -345,7 +348,7 @@ class Product extends ActiveRecord
             function(Review $review, array $reviews) use ($vote, $text)
             {
                 $review->edit($vote, $text);
-                $this->setReviews($reviews);
+                $this->updateReviews($reviews);
             })) {
             throw new NotFoundException('Review not found.');
         }
@@ -359,7 +362,7 @@ class Product extends ActiveRecord
             function(Review $review, array $reviews)
             {
                 $review->activate();
-                $this->setReviews($reviews);
+                $this->updateReviews($reviews);
             })) {
             throw new NotFoundException('Review not found.');
         }
@@ -373,7 +376,7 @@ class Product extends ActiveRecord
             function(Review $review, array $reviews)
             {
                 $review->draft();
-                $this->setReviews($reviews);
+                $this->updateReviews($reviews);
             })) {
             throw new NotFoundException('Review not found.');
         }
@@ -399,7 +402,7 @@ class Product extends ActiveRecord
         foreach ($reviews as $i => $review) {
             if ($review->isIdEqualTo($id)) {
                 unset($reviews[$i]);
-                $this->setReviews($reviews);
+                $this->updateReviews($reviews);
 
                 return;
             }
@@ -408,7 +411,7 @@ class Product extends ActiveRecord
         throw new NotFoundException('Review not found.');
     }
 
-    public function setReviews(array $reviews)
+    public function updateReviews(array $reviews)
     {
         $amount = 0;
         $total = 0;
@@ -436,37 +439,37 @@ class Product extends ActiveRecord
 
     public function getCategoryAssignments() : ActiveQuery
     {
-        return $this->hasOne(CategoryAssignment::class, ['product_id' => 'id']);
+        return $this->hasMany(CategoryAssignment::class, ['product_id' => 'id']);
     }
 
     public function getValues() : ActiveQuery
     {
-        return $this->hasOne(Value::class, ['product_id' => 'id']);
+        return $this->hasMany(Value::class, ['product_id' => 'id']);
     }
 
     public function getPhotos() : ActiveQuery
     {
-        return $this->hasOne(Photo::class, ['product_id' => 'id'])->orderBy('sort');
+        return $this->hasMany(Photo::class, ['product_id' => 'id'])->orderBy('sort');
     }
 
     public function getTagAssignments() : ActiveQuery
     {
-        return $this->hasOne(TagAssignment::class, ['product_id' => 'id']);
+        return $this->hasMany(TagAssignment::class, ['product_id' => 'id']);
     }
 
     public function getRelatedAssignments() : ActiveQuery
     {
-        return $this->hasOne(RelatedAssignment::class, ['product_id' => 'id']);
+        return $this->hasMany(RelatedAssignment::class, ['product_id' => 'id']);
     }
 
     public function getModifications() : ActiveQuery
     {
-        return $this->hasOne(Modification::class, ['product_id' => 'id']);
+        return $this->hasMany(Modification::class, ['product_id' => 'id']);
     }
 
     public function getReviews() : ActiveQuery
     {
-        return $this->hasOne(Review::class, ['product_id' => 'id']);
+        return $this->hasMany(Review::class, ['product_id' => 'id']);
     }
 
     public static function tableName() : string

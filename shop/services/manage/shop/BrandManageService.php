@@ -4,7 +4,6 @@ namespace shop\services\manage\shop;
 
 use shop\entities\Meta;
 use shop\entities\shop\Brand;
-use shop\forms\manage\MetaForm;
 use shop\forms\manage\shop\BrandForm;
 use yii\helpers\Inflector;
 

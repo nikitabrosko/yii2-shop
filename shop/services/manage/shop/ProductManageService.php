@@ -42,7 +42,7 @@ class ProductManageService
             )
         );
 
-        $product->setPrice($form->price->new, $form->price->old);
+        $product->updatePrice($form->price->new, $form->price->old);
 
         foreach ($form->categories->others as $otherId) {
             $category = $this->getCategory($otherId);
@@ -51,7 +51,7 @@ class ProductManageService
         }
 
         foreach ($form->values as $value) {
-            $product->setValue($value->id, $value->value);
+            $product->updateValue($value->id, $value->value);
         }
 
         foreach ($form->photos->files as $file) {
@@ -82,7 +82,7 @@ class ProductManageService
         );
 
         foreach ($form->values as $value) {
-            $product->setValue($value->id, $value->value);
+            $product->updateValue($value->id, $value->value);
         }
 
         $product->revokeTags();

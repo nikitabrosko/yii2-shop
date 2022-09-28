@@ -26,15 +26,21 @@ abstract class CompositeForm extends Model
 
     public function validate($attributeNames = null, $clearErrors = true) : bool
     {
-        $parentNames = array_filter($attributeNames, 'is_string');
+        $parentNames = $attributeNames !== null
+            ? array_filter($attributeNames, 'is_string')
+            : null;
+
         $result = parent::validate($parentNames, $clearErrors);
 
         foreach ($this->forms as $name => $form) {
             if (is_array($form)) {
                 $result = Model::validateMultiple($form) && $result;
             } else {
-                $innerNames = ArrayHelper::getValue($attributeNames, $name);
-                $result = $form->validate($innerNames, $clearErrors) && $result;
+                $innerNames = $attributeNames !== null
+                    ? ArrayHelper::getValue($attributeNames, $name)
+                    : null;
+
+                $result = $form->validate($innerNames ?: null, $clearErrors) && $result;
             }
         }
 
