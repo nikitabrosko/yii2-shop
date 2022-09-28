@@ -9,7 +9,7 @@ backend\assets\AppAsset::register($this);
 
 dmstr\web\AdminLteAsset::register($this);
 
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
+$directoryAsset = '/backend/web';
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

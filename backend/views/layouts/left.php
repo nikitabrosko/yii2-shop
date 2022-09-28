@@ -5,10 +5,10 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <img src="<?= $directoryAsset ?>/img/user_icon.png" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <p><?=Yii::$app->user->identity->username?></p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -38,6 +38,7 @@
                     ['label' => 'Shop', 'icon' => 'folder', 'items' => [
                         ['label' => 'Brand', 'icon' => 'file-o', 'url' => ['shop/brand/index'], 'active' => $this->context->id == 'shop/brand/index'],
                         ['label' => 'Tag', 'icon' => 'file-o', 'url' => ['shop/tag/index'], 'active' => $this->context->id == 'shop/tag/index'],
+                        ['label' => 'Category', 'icon' => 'file-o', 'url' => ['shop/category/index'], 'active' => $this->context->id == 'shop/category/index'],
                     ]],
                 ],
             ]
