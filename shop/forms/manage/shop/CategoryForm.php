@@ -7,6 +7,8 @@ use shop\entities\shop\Category;
 use shop\forms\CompositeForm;
 use shop\forms\manage\MetaForm;
 use shop\validators\SlugValidator;
+use yii\helpers\ArrayHelper;
+use function foo\func;
 
 /**
  * @property MetaForm $meta
@@ -48,6 +50,13 @@ class CategoryForm extends CompositeForm
             ['slug', SlugValidator::class],
             [['name', 'slug'], 'unique', 'targetClass' => Brand::class, 'filter' => $this->_category ? ['<>', 'id', $this->_category->id] : null],
         ];
+    }
+
+    public function parentCategoriesList() : array
+    {
+        return ArrayHelper::map(Category::find()->orderBy('lft')->asArray()->all(), 'id', function(array $category) {
+            return ($category['depth'] > 1 ? str_repeat('-- ', $category['depth'] - 1) . ' ' : '') . $category['name'];
+        });
     }
 
     protected function internalForms(): array
