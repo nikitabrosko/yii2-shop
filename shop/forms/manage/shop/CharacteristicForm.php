@@ -3,6 +3,7 @@
 namespace shop\forms\manage\shop;
 
 use shop\entities\shop\Characteristic;
+use shop\helpers\CharacteristicHelper;
 use yii\base\Model;
 
 /**
@@ -46,6 +47,11 @@ class CharacteristicForm extends Model
             ['sort', 'integer'],
             ['name', 'unique', 'targetClass' => Characteristic::class, 'filter' => $this->_characteristic ? ['<>', 'id', $this->_characteristic->id] : null],
         ];
+    }
+
+    public function typesList(): array
+    {
+        return CharacteristicHelper::typeList();
     }
 
     protected function getVariants(): array
