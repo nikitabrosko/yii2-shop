@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\services;
+namespace shop\services\manage\shop;
 
 use shop\entities\shop\Tag;
 use shop\forms\manage\shop\TagForm;
@@ -26,7 +26,7 @@ class TagManageService
 
         $tag->edit(
             $form->name,
-            $form->slug,
+            $form->slug
         );
 
         $tag->save();
