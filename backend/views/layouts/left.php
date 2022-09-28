@@ -37,6 +37,7 @@
 
                     ['label' => 'Shop', 'icon' => 'folder', 'items' => [
                         ['label' => 'Brand', 'icon' => 'file-o', 'url' => ['shop/brand/index'], 'active' => $this->context->id == 'shop/brand/index'],
+                        ['label' => 'Tag', 'icon' => 'file-o', 'url' => ['shop/tag/index'], 'active' => $this->context->id == 'shop/tag/index'],
                     ]],
                 ],
             ]
