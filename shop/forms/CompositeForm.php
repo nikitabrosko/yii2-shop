@@ -18,7 +18,7 @@ abstract class CompositeForm extends Model
         foreach ($this->forms as $name => $form) {
             $result = is_array($form)
                 ? Model::loadMultiple($form, $data, $formName == '' ? $name : null)
-                : $form->load($data, $formName == '' ? $name : null) && $result;
+                : $form->load($data, $formName == '' ? null : $name) && $result;
         }
 
         return $result;
