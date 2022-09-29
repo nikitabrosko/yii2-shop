@@ -31,7 +31,7 @@ class UserManageService
 
         $user->edit(
             $form->username,
-            $form->email,
+            $form->email
         );
 
         if (!$user->save()) {
