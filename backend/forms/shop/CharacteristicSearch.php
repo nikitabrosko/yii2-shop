@@ -10,7 +10,7 @@ use shop\entities\shop\Characteristic;
 /**
  * CharacteristicSearch represents the model behind the search form of `shop\entities\shop\Characteristic`.
  */
-class CharacteristicSearch extends Characteristic
+class CharacteristicSearch extends Model
 {
     public $id;
     public $name;

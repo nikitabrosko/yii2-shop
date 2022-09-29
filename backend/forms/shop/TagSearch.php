@@ -9,7 +9,7 @@ use shop\entities\shop\Tag;
 /**
  * TagSearch represents the model behind the search form of `shop\entities\shop\Tag`.
  */
-class TagSearch extends Tag
+class TagSearch extends Model
 {
     public $id;
     public $name;

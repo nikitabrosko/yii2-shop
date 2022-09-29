@@ -9,7 +9,7 @@ use shop\entities\shop\Category;
 /**
  * CategorySearch represents the model behind the search form of `shop\entities\shop\Category`.
  */
-class CategorySearch extends Category
+class CategorySearch extends Model
 {
     public $id;
     public $name;
