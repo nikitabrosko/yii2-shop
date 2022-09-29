@@ -6,6 +6,7 @@ use shop\entities\Meta;
 use shop\entities\shop\Brand;
 use shop\entities\shop\Category;
 use shop\entities\shop\product\Product;
+use shop\entities\shop\product\TagAssignment;
 use shop\entities\shop\Tag;
 use shop\exceptions\NotFoundException;
 use shop\forms\manage\shop\product\CategoriesForm;
@@ -14,7 +15,7 @@ use shop\forms\manage\shop\product\PhotosForm;
 use shop\forms\manage\shop\product\PriceForm;
 use shop\forms\manage\shop\product\ProductCreateForm;
 use shop\forms\manage\shop\product\ProductEditForm;
-use shop\forms\manage\TransactionManager;
+use shop\services\manage\TransactionManager;
 
 class ProductManageService
 {
@@ -95,7 +96,6 @@ class ProductManageService
             $product->updateValue($value->id, $value->value);
         }
 
-        $product->revokeTags();
         $this->assignTags($form, $product);
 
         $product->save();
@@ -231,19 +231,24 @@ class ProductManageService
 
     private function assignTags($form, $product)
     {
-        foreach ($form->tags->existing as $tagId) {
-            $tag = $this->getTag($tagId);
-            $product->assignTag($tag->id);
-        }
-
         $this->transactionManager->wrap(function() use ($form, $product) {
-            foreach ($form->tags->newNames as $tagName) {
-                if (!$tag = Tag::findOne(['name' => $tagName])) {
-                    $tag = Tag::create($tagName, $tagName);
-                    $tag->save();
+            if ($form->tags->existing) {
+                foreach ($form->tags->existing as $tagId) {
+                    if (!TagAssignment::findOne(['product_id' => $product->id, 'tag_id' => $tagId])) {
+                        $product->assignTag($tagId);
+                    }
                 }
+            }
 
-                $product->assignTag($tag->id);
+            if ($form->tags->newNames) {
+                foreach ($form->tags->newNames as $tagName) {
+                    if (!Tag::findOne(['name' => $tagName]) && !empty($tagName)) {
+                        $tag = Tag::create($tagName, $tagName);
+                        $tag->save();
+
+                        $product->assignTag($tag->id);
+                    }
+                }
             }
         });
     }
