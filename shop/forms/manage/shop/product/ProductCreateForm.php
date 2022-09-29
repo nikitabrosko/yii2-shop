@@ -3,6 +3,7 @@
 namespace shop\forms\manage\shop\product;
 
 use shop\entities\shop\Characteristic;
+use shop\entities\shop\product\Product;
 use shop\forms\CompositeForm;
 use shop\forms\manage\MetaForm;
 
@@ -19,6 +20,7 @@ class ProductCreateForm extends CompositeForm
     public $brandId;
     public $code;
     public $name;
+    public $description;
 
     public function __construct($config = [])
     {
@@ -37,8 +39,9 @@ class ProductCreateForm extends CompositeForm
     public function rules() : array
     {
         return [
-            [['brandId', 'code', 'name'], 'required'],
+            [['brandId', 'code', 'name', 'description'], 'required'],
             [['code', 'name'], 'string', 'max' => 255],
+            ['description', 'string'],
             ['brandId', 'integer'],
             ['code', 'unique', 'targetClass' => Product::class],
         ];

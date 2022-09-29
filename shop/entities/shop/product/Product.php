@@ -18,6 +18,7 @@ use yii\web\UploadedFile;
  * @property integer $created_at
  * @property string $code
  * @property string $name
+ * @property string $description
  * @property integer $category_id
  * @property integer $brand_id
  * @property integer $price_old
@@ -40,7 +41,7 @@ class Product extends ActiveRecord
 {
     public $meta;
 
-    public static function create($brandId, $categoryId, $code, $name, Meta $meta) : self
+    public static function create($brandId, $categoryId, $code, $name, $description, Meta $meta) : self
     {
         $product = new static();
         $product->brand_id = $brandId;
@@ -49,15 +50,17 @@ class Product extends ActiveRecord
         $product->name = $name;
         $product->meta = $meta;
         $product->created_at = time();
+        $product->description = $description;
 
         return $product;
     }
 
-    public function edit($brandId = null, $code = null, $name = null, Meta $meta = null)
+    public function edit($brandId = null, $code = null, $name = null, $description = null, Meta $meta = null)
     {
         if ($brandId) $this->brand_id = $brandId;
         if ($code) $this->code = $code;
         if ($name) $this->name = $name;
+        if ($description) $this->description = $description;
         if ($meta) $this->meta = $meta;
     }
 
@@ -512,5 +515,16 @@ class Product extends ActiveRecord
         }
 
         return true;
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $related = $this->getRelatedRecords();
+
+        if (array_key_exists('mainPhoto', $related)) {
+            $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
+        }
+
+        parent::afterSave($insert, $changedAttributes);
     }
 }
