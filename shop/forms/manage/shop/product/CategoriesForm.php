@@ -16,7 +16,7 @@ class CategoriesForm extends Model
     {
         if ($product) {
             $this->main = $product->category_id;
-            $this->others = ArrayHelper::getColumn($product->categoryAssignment, 'category_id');
+            $this->others = ArrayHelper::getColumn($product->categoryAssignments, 'category_id');
         }
 
         parent::__construct($config);
