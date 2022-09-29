@@ -2,6 +2,7 @@
 
 namespace shop\forms\manage\shop\product;
 
+use shop\entities\shop\Tag;
 use yii\base\Model;
 use shop\entities\shop\product\Product;
 use yii\helpers\ArrayHelper;
@@ -29,6 +30,16 @@ class TagsForm extends Model
             ['existing', 'each', 'rule' => ['integer']],
             ['textNew', 'string'],
         ];
+    }
+
+    public function tagsList(): array
+    {
+        return ArrayHelper::map(Tag::find()
+            ->orderBy('name')
+            ->asArray()
+            ->all(),
+            'id',
+            'name');
     }
 
     public function getNewNames() : array
