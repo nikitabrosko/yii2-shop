@@ -11,6 +11,7 @@ use shop\exceptions\NotFoundException;
 use shop\forms\manage\shop\product\CategoriesForm;
 use shop\forms\manage\shop\product\ModificationForm;
 use shop\forms\manage\shop\product\PhotosForm;
+use shop\forms\manage\shop\product\PriceForm;
 use shop\forms\manage\shop\product\ProductCreateForm;
 use shop\forms\manage\shop\product\ProductEditForm;
 use shop\forms\manage\TransactionManager;
@@ -29,6 +30,7 @@ class ProductManageService
         $brand = $this->getBrand($form->brandId);
 
         $category = $this->getCategory($form->categories->main);
+        $this->assertIsNotRoot($category);
 
         $product = Product::create(
             $brand->id,
@@ -70,6 +72,8 @@ class ProductManageService
     {
         $product = $this->getProduct($id);
         $brand = $this->getBrand($form->brandId);
+        $category = $this->getCategory($form->categories->main);
+        $this->assertIsNotRoot($category);
 
         $product->edit(
             $brand->id,
@@ -83,6 +87,10 @@ class ProductManageService
             )
         );
 
+        $product->changeMainCategory($category->id);
+
+        $product->revokeCategories();
+
         foreach ($form->values as $value) {
             $product->updateValue($value->id, $value->value);
         }
@@ -93,17 +101,28 @@ class ProductManageService
         $product->save();
     }
 
+    public function changePrice($id, PriceForm $form): void
+    {
+        $product = $this->getProduct($id);
+
+        $product->updatePrice($form->new, $form->old);
+
+        $product->save($product);
+    }
+
     public function changeCategories($id, CategoriesForm $form)
     {
         $product = $this->getProduct($id);
 
         $category = $this->getCategory($form->main);
+        $this->assertIsNotRoot($category);
 
         $product->changeMainCategory($category->id);
         $product->revokeCategories();
 
         foreach ($form->others as $otherId) {
             $category = $this->getCategory($otherId);
+            $this->assertIsNotRoot($category);
 
             $product->assignCategory($category->id);
         }
@@ -263,5 +282,12 @@ class ProductManageService
         }
 
         return $tag;
+    }
+
+    private function assertIsNotRoot(?Category $category)
+    {
+        if ($category->isRoot()) {
+            throw new \DomainException('Unable to manage the root category.');
+        }
     }
 }
