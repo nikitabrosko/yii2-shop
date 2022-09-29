@@ -31,16 +31,16 @@ class Modification extends ActiveRecord
 
     public function isIdEqualTo($id) : bool
     {
-        return $this->id === $id;
+        return $this->id == $id;
     }
 
     public function isCodeEqualTo($code) : bool
     {
-        return $this->code === $code;
+        return $this->code == $code;
     }
 
     public static function tableName() : string
     {
-        return '{{%shop_modification}}';
+        return '{{%shop_modifications}}';
     }
 }

@@ -24,7 +24,7 @@ class ModificationForm extends Model
     public function rules(): array
     {
         return [
-            [['code', 'name', 'quantity'], 'required'],
+            [['code', 'name'], 'required'],
             ['price', 'integer'],
         ];
     }
