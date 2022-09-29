@@ -21,6 +21,7 @@ $directoryAsset = '/backend/web';
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <link href="/backend/web/css/fixed-navbar.css" rel="stylesheet">
+    <link href="/backend/web/css/fix-file-uploader.css" rel="stylesheet">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <?php $this->beginBody() ?>
