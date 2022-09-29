@@ -12,7 +12,7 @@ class TagManageService
     {
         $tag = Tag::create(
             $form->name,
-            $form->slug ?: Inflector::slug($form->name),
+            $form->slug ?: Inflector::slug($form->name)
         );
 
         $tag->save();
