@@ -25,7 +25,7 @@
         "kartik-v/yii2-widgets": "*",
         "kartik-v/yii2-field-range": "*",
         "paulzi/yii2-nested-sets": "^1.1",
-        "yii-dream-team/yii2-upload-behavior": "*"
+        "yii-dream-team/yii2-upload-behavior": "^1.2"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
