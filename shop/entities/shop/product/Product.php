@@ -7,6 +7,7 @@ use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\shop\Brand;
 use shop\entities\shop\Category;
+use shop\entities\shop\Tag;
 use shop\exceptions\AlreadyExistsException;
 use shop\exceptions\NotFoundException;
 use yii\db\ActiveQuery;
@@ -30,9 +31,12 @@ use yii\web\UploadedFile;
  * @property Category $category
  *
  * @property CategoryAssignment[] $categoryAssignments
+ * @property Category[] $categories
  * @property Value[] $values
  * @property Photo[] $photos
+ * @property Photo $mainPhoto
  * @property TagAssignment[] $tagAssignments
+ * @property Tag[] $tags
  * @property RelatedAssignment[] $relatedAssignments
  * @property Modification[] $modifications
  * @property Review[] $reviews
@@ -302,6 +306,7 @@ class Product extends ActiveRecord
         }
 
         $this->photos = $photos;
+        $this->populateRelation('mainPhoto', reset($photos));
     }
 
     public function assignRelatedProduct($id)
@@ -445,6 +450,11 @@ class Product extends ActiveRecord
         return $this->hasMany(CategoryAssignment::class, ['product_id' => 'id']);
     }
 
+    public function getCategories() : ActiveQuery
+    {
+        return $this->hasMany(Category::class, ['id' => 'category_id'])->via('categoryAssignments');
+    }
+
     public function getValues() : ActiveQuery
     {
         return $this->hasMany(Value::class, ['product_id' => 'id']);
@@ -460,6 +470,11 @@ class Product extends ActiveRecord
         return $this->hasMany(TagAssignment::class, ['product_id' => 'id']);
     }
 
+    public function getTags() : ActiveQuery
+    {
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])->via('tagAssignments');
+    }
+
     public function getRelatedAssignments() : ActiveQuery
     {
         return $this->hasMany(RelatedAssignment::class, ['product_id' => 'id']);
@@ -473,6 +488,11 @@ class Product extends ActiveRecord
     public function getReviews() : ActiveQuery
     {
         return $this->hasMany(Review::class, ['product_id' => 'id']);
+    }
+
+    public function getMainPhoto(): ActiveQuery
+    {
+        return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
     }
 
     public static function tableName() : string
