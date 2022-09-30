@@ -17,8 +17,6 @@ use yii\helpers\ArrayHelper;
  */
 class ProductEditForm extends CompositeForm
 {
-    public $categories;
-
     public $brandId;
     public $code;
     public $name;
@@ -66,6 +64,6 @@ class ProductEditForm extends CompositeForm
 
     protected function internalForms() : array
     {
-        return ['meta', 'tags', 'values'];
+        return ['meta', 'tags', 'values', 'categories'];
     }
 }
