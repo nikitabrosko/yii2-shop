@@ -5,21 +5,17 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%shop_tag_assignments}}`.
  */
-class m220929_152753_create_shop_tag_assignments_table extends Migration
+class m220930_071149_create_shop_tag_assignments_table extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function safeUp()
     {
         $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
 
         $this->createTable('{{%shop_tag_assignments}}', [
+            'id' => $this->primaryKey(),
             'product_id' => $this->integer()->notNull(),
             'tag_id' => $this->integer()->notNull(),
         ], $tableOptions);
-
-        $this->addPrimaryKey('{{%pk-shop_tag_assignments}}', '{{%shop_tag_assignments}}', ['product_id', 'tag_id']);
 
         $this->createIndex('{{%idx-shop_tag_assignments-product_id}}', '{{%shop_tag_assignments}}', 'product_id');
         $this->createIndex('{{%idx-shop_tag_assignments-tag_id}}', '{{%shop_tag_assignments}}', 'tag_id');
