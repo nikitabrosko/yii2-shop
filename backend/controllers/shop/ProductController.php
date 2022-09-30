@@ -42,6 +42,8 @@ class ProductController extends Controller
                     'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
+                        'activate' => ['POST'],
+                        'draft' => ['POST'],
                         'delete-photo' => ['POST'],
                         'move-photo-up' => ['POST'],
                         'move-photo-down' => ['POST'],
@@ -225,6 +227,28 @@ class ProductController extends Controller
         $this->productManageService->movePhotoDown($id, $photo_id);
 
         return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
+    }
+
+    public function actionActivate($id)
+    {
+        try {
+            $this->productManageService->acrivate($id);
+        } catch(\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    public function actionDraft($id)
+    {
+        try {
+            $this->productManageService->draft($id);
+        } catch(\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**

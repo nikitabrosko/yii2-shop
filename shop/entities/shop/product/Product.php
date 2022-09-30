@@ -7,6 +7,7 @@ use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\shop\Brand;
 use shop\entities\shop\Category;
+use shop\entities\shop\product\queries\ProductQuery;
 use shop\entities\shop\Tag;
 use shop\exceptions\AlreadyExistsException;
 use shop\exceptions\NotFoundException;
@@ -25,6 +26,7 @@ use yii\web\UploadedFile;
  * @property integer $price_old
  * @property integer $price_new
  * @property integer $rating
+ * @property integer $status
  *
  * @property Meta $meta
  * @property Brand $brand
@@ -43,6 +45,9 @@ use yii\web\UploadedFile;
  */
 class Product extends ActiveRecord
 {
+    const STATUS_DRAFT = 0;
+    const STATUS_ACTIVE = 1;
+
     public $meta;
 
     public static function create($brandId, $categoryId, $code, $name, $description, Meta $meta) : self
@@ -53,6 +58,7 @@ class Product extends ActiveRecord
         $product->code = $code;
         $product->name = $name;
         $product->meta = $meta;
+        $product->status = self::STATUS_DRAFT;
         $product->created_at = time();
         $product->description = $description;
 
@@ -77,6 +83,34 @@ class Product extends ActiveRecord
     public function changeMainCategory($categoryId)
     {
         $this->category_id = $categoryId;
+    }
+
+    public function activate()
+    {
+        if ($this->isActive()) {
+            throw new \DomainException('Product is already active');
+        }
+
+        $this->status = self::STATUS_ACTIVE;
+    }
+
+    public function draft()
+    {
+        if ($this->isDraft()) {
+            throw new \DomainException('Product is already in draft');
+        }
+
+        $this->status = self::STATUS_DRAFT;
+    }
+
+    public function isActive() : bool
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function isDraft() : bool
+    {
+        return $this->status == self::STATUS_DRAFT;
     }
 
     public function updateValue($id, $value)
@@ -238,6 +272,21 @@ class Product extends ActiveRecord
         $photos[] = Photo::create($file);
 
         $this->updatePhotos($photos);
+    }
+
+    public function changeMainPhoto($id)
+    {
+        $photos = $this->photos;
+
+        foreach ($photos as $photo) {
+            if ($photo->isIdEqualTo($id)) {
+                $this->mainPhoto = $photo;
+
+                return;
+            }
+        }
+
+        throw new NotFoundException('Photo not found.');
     }
 
     public function removePhoto($id)
@@ -541,10 +590,15 @@ class Product extends ActiveRecord
     {
         $related = $this->getRelatedRecords();
 
+        parent::afterSave($insert, $changedAttributes);
+
         if (array_key_exists('mainPhoto', $related)) {
             $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
         }
+    }
 
-        parent::afterSave($insert, $changedAttributes);
+    public static function find() : ProductQuery
+    {
+        return new ProductQuery(static::class);
     }
 }

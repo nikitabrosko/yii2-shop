@@ -110,6 +110,22 @@ class ProductManageService
         $product->save($product);
     }
 
+    public function activate($id)
+    {
+        $product = $this->getProduct($id);
+        $product->activate();
+
+        $product->save();
+    }
+
+    public function draft($id)
+    {
+        $product = $this->getProduct($id);
+        $product->draft();
+
+        $product->save();
+    }
+
     public function changeCategories($id, CategoriesForm $form)
     {
         $product = $this->getProduct($id);
