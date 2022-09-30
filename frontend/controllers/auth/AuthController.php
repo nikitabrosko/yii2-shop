@@ -12,6 +12,8 @@ use yii\web\Response;
 
 class AuthController extends Controller
 {
+    public $layout = 'cabinet';
+
     private $loginService;
 
     public function __construct($id, $module, LoginService $loginService, $config = [])

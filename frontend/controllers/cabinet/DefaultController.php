@@ -24,6 +24,7 @@ class DefaultController extends Controller
 
     public function actionCabinet() : string
     {
+        $this->layout = 'cabinet';
         return $this->render('cabinet');
     }
 }
