@@ -1,6 +1,7 @@
 <?php
 
 use shop\entities\shop\product\Product;
+use shop\helpers\ProductHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -46,6 +47,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => 'category.name',
                     ],
                     'price_new',
+                    [
+                        'attribute' => 'status',
+                        'filter' => $searchModel->statusList(),
+                        'value' => function (Product $model) {
+                            return ProductHelper::statusLabel($model->status);
+                        },
+                        'format' => 'raw',
+                    ],
                     ['class' => ActionColumn::class],
                 ],
             ]); ?>
