@@ -88,14 +88,14 @@ class ProductManageService
             )
         );
 
-        $product->changeMainCategory($category->id);
-
         $product->revokeCategories();
+        $this->changeCategories($product->id, $form->categories);
 
         foreach ($form->values as $value) {
             $product->updateValue($value->id, $value->value);
         }
 
+        $product->revokeTags();
         $this->assignTags($form, $product);
 
         $product->save();
@@ -120,11 +120,13 @@ class ProductManageService
         $product->changeMainCategory($category->id);
         $product->revokeCategories();
 
-        foreach ($form->others as $otherId) {
-            $category = $this->getCategory($otherId);
-            $this->assertIsNotRoot($category);
+        if ($form->others) {
+            foreach ($form->others as $otherId) {
+                $category = $this->getCategory($otherId);
+                $this->assertIsNotRoot($category);
 
-            $product->assignCategory($category->id);
+                $product->assignCategory($category->id);
+            }
         }
 
         $product->save();
@@ -234,9 +236,7 @@ class ProductManageService
         $this->transactionManager->wrap(function() use ($form, $product) {
             if ($form->tags->existing) {
                 foreach ($form->tags->existing as $tagId) {
-                    if (!TagAssignment::findOne(['product_id' => $product->id, 'tag_id' => $tagId])) {
-                        $product->assignTag($tagId);
-                    }
+                    $product->assignTag($tagId);
                 }
             }
 
