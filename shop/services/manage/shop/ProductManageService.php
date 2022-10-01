@@ -48,10 +48,12 @@ class ProductManageService
 
         $product->updatePrice($form->price->new, $form->price->old);
 
-        foreach ($form->categories->others as $otherId) {
-            $category = $this->getCategory($otherId);
+        if ($form->categories->others) {
+            foreach ($form->categories->others as $otherId) {
+                $category = $this->getCategory($otherId);
 
-            $product->assignCategory($category->id);
+                $product->assignCategory($category->id);
+            }
         }
 
         foreach ($form->values as $value) {
