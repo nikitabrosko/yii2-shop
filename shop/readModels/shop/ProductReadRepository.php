@@ -49,6 +49,7 @@ class ProductReadRepository
             ->with('mainPhoto');
 
         $query->andWhere(['p.brand_id' => $brand->id]);
+
         return $this->getProvider($query);
     }
 
@@ -62,7 +63,17 @@ class ProductReadRepository
         $query->joinWith(['tagAssignments ta'], false);
         $query->andWhere(['ta.tag_id' => $tag->id]);
         $query->groupBy('p.id');
+
         return $this->getProvider($query);
+    }
+
+    public function getFeatured($limit) : array
+    {
+        return Product::find()
+            ->with('mainPhoto')
+            ->orderBy(['id' => SORT_DESC])
+            ->limit($limit)
+            ->all();
     }
 
     public function find($id)
