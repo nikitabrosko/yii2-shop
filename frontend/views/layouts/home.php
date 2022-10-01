@@ -100,25 +100,22 @@ use frontend\widgets\FeaturedProductsWidget;
             </div>
         </div>
     </div>
+<?php $this->registerJs("
+$(document).ready(function () {
+    new bootstrap.Carousel(document.querySelector('#carousel-banner-0'), {
+        ride: 'carousel',
+        interval: 5000,
+        wrap: true
+    });
+});") ?>
 
-    <script type="text/javascript"><!--
-        $(document).ready(function () {
-            new bootstrap.Carousel(document.querySelector('#carousel-banner-0'), {
-                ride: 'carousel',
-                interval: 5000,
-                wrap: true
-            });
-        });
-        //--></script>
-
-    <script type="text/javascript"><!--
-        $(document).ready(function () {
-            new bootstrap.Carousel(document.querySelector('#carousel-banner-1'), {
-                ride: 'carousel',
-                interval: 5000,
-                wrap: true
-            });
-        });
-        //--></script>
+<?php $this->registerJs("
+$(document).ready(function () {
+    new bootstrap.Carousel(document.querySelector('#carousel-banner-1'), {
+        ride: 'carousel',
+        interval: 5000,
+        wrap: true
+    });
+});") ?>
 
 <?php $this->endContent() ?>
