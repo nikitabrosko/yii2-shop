@@ -3,6 +3,7 @@
 namespace backend\forms\shop;
 
 use shop\entities\shop\Category;
+use shop\helpers\ProductHelper;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use shop\entities\shop\product\Product;
@@ -90,5 +91,10 @@ class ProductSearch extends Model
             function (array $category) {
                 return ($category['depth'] > 1 ? str_repeat('-- ', $category['depth'] - 1) . ' ' : '') . $category['name'];
         });
+    }
+
+    public function statusList(): array
+    {
+        return ProductHelper::statusList();
     }
 }

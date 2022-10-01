@@ -10,6 +10,8 @@ use yiidreamteam\upload\ImageUploadBehavior;
  * @property integer $id
  * @property string $file
  * @property integer $sort
+ *
+ * @mixin ImageUploadBehavior
  */
 class Photo extends ActiveRecord
 {
@@ -50,6 +52,7 @@ class Photo extends ActiveRecord
                 'thumbs' => [
                     'admin' => ['width' => 100, 'height' => 70],
                     'thumb' => ['width' => 640, 'height' => 480],
+                    'catalog_list' => ['width' => 228, 'height' => 228],
                 ],
             ],
         ];
