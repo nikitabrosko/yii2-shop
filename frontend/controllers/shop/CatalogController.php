@@ -36,12 +36,12 @@ class CatalogController extends Controller
         $this->tags = $tags;
     }
 
-    public function actionIndex()
+    public function actionCatalog()
     {
         $dataProvider = $this->products->getAll();
         $category = $this->categories->getRoot();
 
-        return $this->render('index', [
+        return $this->render('catalog', [
             'category' => $category,
             'dataProvider' => $dataProvider,
         ]);

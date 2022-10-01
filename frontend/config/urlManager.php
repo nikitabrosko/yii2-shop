@@ -13,10 +13,16 @@ return [
         '<_a:login|logout>' => 'auth/auth/<_a>',
 
         'cabinet' => 'cabinet/default/cabinet',
-        'cabinet/<_c:[\w\-]+>' => 'cabinet/<_c>/index',
+        'cabinet/<_c:[\w\-]+>' => 'cabinet/<_c>/cabinet',
         'cabinet/<_c:[\w\-]+>/<id:\d+>' => 'cabinet/<_c>/view',
         'cabinet/<_c:[\w\-]+>/<_a:[\w-]+>' => 'cabinet/<_c>/<_a>',
         'cabinet/<_c:[\w\-]+>/<id:\d+>/<_a:[\w\-]+>' => 'cabinet/<_c>/<_a>',
+
+        'catalog' => 'shop/catalog/catalog',
+        'catalog/<_c:[\w\-]+>' => 'shop/<_c>/catalog',
+        'catalog/<_c:[\w\-]+>/<id:\d+>' => 'shop/<_c>/view',
+        'catalog/<_c:[\w\-]+>/<_a:[\w-]+>' => 'shop/<_c>/<_a>',
+        'catalog/<_c:[\w\-]+>/<id:\d+>/<_a:[\w\-]+>' => 'shop/<_c>/<_a>',
 
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
