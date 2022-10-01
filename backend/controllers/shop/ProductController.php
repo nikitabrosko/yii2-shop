@@ -232,7 +232,7 @@ class ProductController extends Controller
     public function actionActivate($id)
     {
         try {
-            $this->productManageService->acrivate($id);
+            $this->productManageService->activate($id);
         } catch(\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
