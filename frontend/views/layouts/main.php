@@ -105,6 +105,7 @@ AppAsset::register($this);
             <div class="collapse navbar-collapse" id="narbar-menu">
                 <ul class="nav navbar-nav">
                     <li class="nav-item"><a href="<?= Html::encode(Url::to(['/site/index'])) ?>" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="<?= Html::encode(Url::to(['/catalog/catalog'])) ?>" class="nav-link">Catalog</a></li>
                     <li class="nav-item"><a href="<?= Html::encode(Url::to(['/site/about'])) ?>" class="nav-link">About</a></li>
                     <li class="nav-item"><a href="<?= Html::encode(Url::to(['/contact/contact'])) ?>" class="nav-link">Contact</a></li>
                     <!--<li class="nav-item dropdown"><a href="https://demo.opencart.com/index.php?route=product/category&amp;language=en-gb&amp;path=20" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Desktops</a>
