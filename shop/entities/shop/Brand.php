@@ -65,4 +65,9 @@ class Brand extends ActiveRecord
             ],
         ];
     }
+
+    public function getSeoTitle() : string
+    {
+        return $this->meta->title ?: $this->name;
+    }
 }
