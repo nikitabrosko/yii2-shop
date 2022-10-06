@@ -24,8 +24,8 @@ MagnificPopupAsset::register($this);
 
 <div class="row">
     <div id="content" class="col">
-        <div class="row mb-3">
-            <div class="col-sm">
+        <div class="row">
+            <div class="col-sm mb-3">
                 <div class="image magnific-popup">
                     <? foreach ($product->photos as $i => $photo): ?>
                         <? if ($i == 1): ?>
@@ -33,14 +33,14 @@ MagnificPopupAsset::register($this);
                         <? endif; ?>
 
                         <? if ($i == 0): ?>
-                            <a href="<?= $photo->getUploadedFileUrl('file') ?>" title="<?= $product->name ?>">
+                            <a href="<?= $photo->getThumbFileUrl('file', 'catalog_origin') ?>" title="<?= $product->name ?>">
                                 <img src="<?= $photo->getThumbFileUrl('file', 'catalog_product_main') ?>"
                                      title="<?= $product->name ?>"
                                      alt="<?= $product->name ?>"
                                      class="img-thumbnail mb-3" />
                             </a>
                         <? else: ?>
-                            <a href="<?= $photo->getUploadedFileUrl('file') ?>" title="<?= $product->name ?>">
+                            <a href="<?= $photo->getThumbFileUrl('file', 'catalog_origin') ?>" title="<?= $product->name ?>">
                                 <img src="<?= $photo->getThumbFileUrl('file', 'catalog_product_additional') ?>"
                                      title="<?= $product->name ?>"
                                      alt="<?= $product->name ?>"
