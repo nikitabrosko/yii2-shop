@@ -29,9 +29,9 @@ $url = Url::to(['product', 'id' => $product->id]);
                     <h4><a href="<?= Html::encode($url) ?>"><?= Html::encode($product->name) ?></a></h4>
                     <p><?= Html::encode(StringHelper::truncateWords(strip_tags($product->description), 20)) ?></p>
                     <div class="price">
-                        <span class="price-new">BYN<?= Html::encode(PriceHelper::format($product->price_new)) ?></span>
+                        <span class="price-new">BYN <?= Html::encode(PriceHelper::format($product->price_new)) ?></span>
                         <? if ($product->price_old): ?>
-                            <span class="price-old">BYN<?= Html::encode(PriceHelper::format($product->price_old)) ?></span>
+                            <span class="price-old">BYN <?= Html::encode(PriceHelper::format($product->price_old)) ?></span>
                         <? endif; ?>
                     </div>
                 </div>
