@@ -9,9 +9,9 @@ return [
         '' => 'site/index',
         '<_a:about>' => 'site/<_a>',
         '<_a:contact>' => 'contact/<_a>',
-        '<_a:signup>' => 'auth/signup/<_a>',
-        'signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
-        '<_a:login|logout>' => 'auth/auth/<_a>',
+        'auth/signup' => 'auth/signup/signup',
+        'auth/<_a:login|logout>' => 'auth/auth/<_a>',
+        'auth/signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
 
         'cabinet' => 'cabinet/default/cabinet',
         'cabinet/<_c:[\w\-]+>' => 'cabinet/<_c>/cabinet',

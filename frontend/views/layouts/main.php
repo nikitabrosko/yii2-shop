@@ -56,11 +56,11 @@ AppAsset::register($this);
                         <a href="" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user"></i> <span class="d-none d-md-inline">My Account</span> <i class="fas fa-caret-down"></i></a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <?php if (Yii::$app->user->isGuest): ?>
-                                <li class="nav-item"><a href="<?= Html::encode(Url::to(['/auth/auth/login'])) ?>" class="nav-link">Login</a></li>
-                                <li class="nav-item"><a href="<?= Html::encode(Url::to(['/auth/signup/signup'])) ?>" class="nav-link">Signup</a></li>
+                                <li class="nav-item"><a href="<?= Html::encode(Url::to(['/auth/login'])) ?>" class="nav-link">Login</a></li>
+                                <li class="nav-item"><a href="<?= Html::encode(Url::to(['/auth/signup'])) ?>" class="nav-link">Signup</a></li>
                             <?php else: ?>
                                 <li class="nav-item"><a href="<?= Html::encode(Url::to(['/cabinet/default/cabinet'])) ?>" class="nav-link">Cabinet</a></li>
-                                <li class="nav-item"><a href="<?= Html::encode(Url::to(['/auth/auth/logout'])) ?>" data-method="post" class="nav-link">Logout</a></li>
+                                <li class="nav-item"><a href="<?= Html::encode(Url::to(['/auth/logout'])) ?>" data-method="post" class="nav-link">Logout</a></li>
                             <?php endif; ?>
                         </ul>
                     </div>
