@@ -30,7 +30,9 @@ $url = Url::to(['product', 'id' => $product->id]);
                     <p><?= Html::encode(StringHelper::truncateWords(strip_tags($product->description), 20)) ?></p>
                     <div class="price">
                         <span class="price-new">BYN<?= Html::encode(PriceHelper::format($product->price_new)) ?></span>
-                        <span class="price-old">BYN<?= Html::encode(PriceHelper::format($product->price_old)) ?></span>
+                        <? if ($product->price_old): ?>
+                            <span class="price-old">BYN<?= Html::encode(PriceHelper::format($product->price_old)) ?></span>
+                        <? endif; ?>
                     </div>
                 </div>
                 <div class="button-group">
