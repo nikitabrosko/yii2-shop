@@ -4,6 +4,7 @@ return [
     'hostInfo' => $params['frontendHostInfo'],
     'enablePrettyUrl' => true,
     'showScriptName' => false,
+    'cache' => false,
     'rules' => [
         '' => 'site/index',
         '<_a:about>' => 'site/<_a>',
@@ -19,6 +20,7 @@ return [
         'cabinet/<_c:[\w\-]+>/<id:\d+>/<_a:[\w\-]+>' => 'cabinet/<_c>/<_a>',
 
         'catalog' => 'shop/catalog/catalog',
+        ['class' => 'frontend\urls\CategoryUrlRule'],
         'catalog/<_c:[\w\-]+>' => 'shop/<_c>/catalog',
         'catalog/<_c:[\w\-]+>/<id:\d+>' => 'shop/<_c>/view',
         'catalog/<_c:[\w\-]+>/<_a:[\w-]+>' => 'shop/<_c>/<_a>',
