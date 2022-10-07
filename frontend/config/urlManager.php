@@ -21,10 +21,7 @@ return [
 
         'catalog' => 'shop/catalog/catalog',
         ['class' => 'frontend\urls\CategoryUrlRule'],
-        'catalog/<_c:[\w\-]+>' => 'shop/<_c>/catalog',
-        'catalog/<_c:[\w\-]+>/<id:\d+>' => 'shop/<_c>/view',
-        'catalog/<_c:[\w\-]+>/<_a:[\w-]+>' => 'shop/<_c>/<_a>',
-        'catalog/<_c:[\w\-]+>/<id:\d+>/<_a:[\w\-]+>' => 'shop/<_c>/<_a>',
+        'catalog/<id:\d+>' => 'shop/catalog/product',
 
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
