@@ -96,7 +96,8 @@ MagnificPopupAsset::register($this);
                         <? $form = ActiveForm::begin() ?>
 
                         <div class="mb-3">
-                            <?= $form->field($addToCartForm, 'modification')->dropDownList($addToCartForm->modificationsList(), ['prompt' => 'Choose modification']) ?>
+                            <?= $form->field($addToCartForm, 'modification')->dropDownList($addToCartForm->modificationsList(),
+                                ['prompt' => 'Choose modification', 'class' => 'form-select']) ?>
                         </div>
                         <div class="mb-3">
                             <?= $form->field($addToCartForm, 'quantity')->textInput() ?>
@@ -158,7 +159,7 @@ MagnificPopupAsset::register($this);
                             </div>
 
                             <div class="row mb-3 required">
-                                <?= $form->field($reviewForm, 'vote')->dropDownList($reviewForm->votesList(), ['prompt' => 'Select vote']) ?>
+                                <?= $form->field($reviewForm, 'vote')->dropDownList($reviewForm->votesList(), ['prompt' => 'Select vote', 'class' => 'form-select']) ?>
                             </div>
 
                             <div class="d-inline-block pt-2 pd-2 w-100">
@@ -176,7 +177,7 @@ MagnificPopupAsset::register($this);
     </div>
 </div>
 
-<!--<script type="text/javascript"><!--
+<!--<script type="text/javascript">
     $('#input-subscription').on('change', function (e) {
         var element = this;
 
@@ -302,7 +303,7 @@ MagnificPopupAsset::register($this);
             }
         });
     });
-    //--></script>-->
+    //</script>-->
 
 <? $popup_js = <<<POPUP_JS
 $('.magnific-popup').magnificPopup({

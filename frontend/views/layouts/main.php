@@ -77,13 +77,18 @@ AppAsset::register($this);
         <div class="row">
             <div class="col-md-3 col-lg-4">
                 <div id="logo">
-                    <a href="https://demo.opencart.com/index.php?route=common/home&amp;language=en-gb"><img src="https://demo.opencart.com/image/catalog/opencart-logo.png" title="Your Store" alt="Your Store" class="img-fluid" /></a>
+                    <a href="<?= Html::encode(Url::to(['/site/index'])) ?>"><img src="https://demo.opencart.com/image/catalog/opencart-logo.png" title="Your Store" alt="Your Store" class="img-fluid" /></a>
                 </div>
             </div>
-            <div class="col-md-5"><div id="search" class="input-group mb-3">
-                    <input type="text" name="search" value="" placeholder="Search" class="form-control form-control-lg">
-                    <button type="button" data-lang="en-gb" class="btn btn-light btn-lg"><i class="fas fa-search"></i></button>
+            <div class="col-md-5">
+                <?= Html::beginForm(['/shop/catalog/search'], 'get') ?>
+                <div id="search" class="input-group mb-3">
+                    <input type="text" name="text" value="" placeholder="Search" class="form-control form-control-lg"/>
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-light btn-lg"><i class="fa fa-search"></i></button>
+                    </span>
                 </div>
+                <?= Html::endForm() ?>
             </div>
             <div id="header-cart" class="col-md-4 col-lg-3"><div class="dropdown d-grid">
                     <button type="button" data-bs-toggle="dropdown" class="btn btn-inverse btn-block dropdown-toggle"><i class="fas fa-shopping-cart"></i> 0 item(s) - $0.00</button>
