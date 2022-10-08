@@ -20,15 +20,10 @@ class Tag extends ActiveRecord
         return $tag;
     }
 
-    public function edit(string $name = null, string $slug = null)
+    public function edit(string $name, string $slug)
     {
-        if ($name) {
-            $this->name = $name;
-        }
-
-        if ($slug) {
-            $this->slug = $slug;
-        }
+        $this->name = $name;
+        $this->slug = $slug;
     }
 
     public function save($runValidation = true, $attributeNames = null) : bool

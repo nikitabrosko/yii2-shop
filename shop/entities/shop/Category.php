@@ -43,14 +43,14 @@ class Category extends ActiveRecord
         return $category;
     }
 
-    public function edit(string $name = null, string $slug = null, string $title = null,
-                         string $description = null, Meta $meta = null)
+    public function edit(string $name , string $slug, string $title,
+                         string $description, Meta $meta)
     {
-        if ($name) $this->name = $name;
-        if ($slug) $this->slug = $slug;
-        if ($title) $this->title = $title;
-        if ($description) $this->description = $description;
-        if ($meta) $this->meta = $meta;
+        $this->name = $name;
+        $this->slug = $slug;
+        $this->title = $title;
+        $this->description = $description;
+        $this->meta = $meta;
     }
 
     public static function tableName() : string

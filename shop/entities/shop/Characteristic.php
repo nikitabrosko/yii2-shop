@@ -36,15 +36,15 @@ class Characteristic extends ActiveRecord
         return $characteristic;
     }
 
-    public function edit(string $name = null, string $type = null, string $required = null,
-                         string $default = null, array $variants = null, int $sort = null)
+    public function edit(string $name, string $type, string $required,
+                         string $default, array $variants, int $sort)
     {
-        if ($name) $this->name = $name;
-        if ($type) $this->type = $type;
-        if ($required) $this->required = $required;
-        if ($default) $this->default = $default;
-        if ($variants) $this->variants = $variants;
-        if ($sort) $this->sort = $sort;
+        $this->name = $name;
+        $this->type = $type;
+        $this->required = $required;
+        $this->default = $default;
+        $this->variants = $variants;
+        $this->sort = $sort;
     }
 
     public function isString(): bool

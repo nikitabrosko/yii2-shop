@@ -26,11 +26,11 @@ class Brand extends ActiveRecord
         return $brand;
     }
 
-    public function edit(string $name = null, string $slug = null, Meta $meta = null)
+    public function edit(string $name, string $slug, Meta $meta)
     {
-        if ($name) $this->name = $name;
-        if ($slug) $this->slug = $slug;
-        if ($meta) $this->meta = $meta;
+        $this->name = $name;
+        $this->slug = $slug;
+        $this->meta = $meta;
     }
 
     public static function tableName() : string
