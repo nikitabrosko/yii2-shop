@@ -5,18 +5,17 @@ namespace shop\forms\shop\search;
 use shop\entities\shop\Brand;
 use shop\entities\shop\Category;
 use shop\entities\shop\Characteristic;
-use yii\base\Model;
+use shop\forms\CompositeForm;
 use yii\helpers\ArrayHelper;
 
 /**
  * @property ValueForm[] $values
  */
-class SearchForm extends Model
+class SearchForm extends CompositeForm
 {
     public $text;
     public $category;
     public $brand;
-    public $values;
 
     public function __construct(array $config = [])
     {
