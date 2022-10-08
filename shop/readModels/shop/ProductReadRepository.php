@@ -5,7 +5,9 @@ namespace shop\readModels\shop;
 use shop\entities\shop\Brand;
 use shop\entities\shop\Category;
 use shop\entities\shop\product\Product;
+use shop\entities\shop\product\Value;
 use shop\entities\shop\Tag;
+use shop\forms\shop\search\SearchForm;
 use yii\data\ActiveDataProvider;
 use yii\data\DataProviderInterface;
 use yii\db\ActiveQuery;
@@ -113,5 +115,53 @@ class ProductReadRepository
                 'pageSizeLimit' => [15, 100],
             ]
         ]);
+    }
+
+    public function search(SearchForm $form): DataProviderInterface
+    {
+        $query = Product::find()->alias('p')->active('p')->with('mainPhoto', 'category');
+
+        if ($form->brand) {
+            $query->andWhere(['p.brand_id' => $form->brand]);
+        }
+
+        if ($form->category) {
+            if ($category = Category::findOne($form->category)) {
+                $ids = ArrayHelper::merge([$form->category], $category->getChildren()->select('id')->column());
+                $query->joinWith(['categoryAssignments ca'], false);
+                $query->andWhere(['or', ['p.category_id' => $ids], ['ca.category_id' => $ids]]);
+            } else {
+                $query->andWhere(['p.id' => 0]);
+            }
+        }
+
+        if ($form->values) {
+            $productIds = null;
+
+            foreach ($form->values as $value) {
+                if ($value->isFilled()) {
+                    $q = Value::find()->andWhere(['characteristic_id' => $value->getId()]);
+
+                    $q->andFilterWhere(['>=', 'CAST(value AS SIGNED)', $value->from]);
+                    $q->andFilterWhere(['<=', 'CAST(value AS SIGNED)', $value->to]);
+                    $q->andFilterWhere(['value' => $value->equal]);
+
+                    $foundIds = $q->select('product_id')->column();
+                    $productIds = $productIds === null ? $foundIds : array_intersect($productIds, $foundIds);
+                }
+            }
+
+            if ($productIds !== null) {
+                $query->andWhere(['p.id' => $productIds]);
+            }
+        }
+
+        if (!empty($form->text)) {
+            $query->andWhere(['or', ['like', 'code', $form->text], ['like', 'name', $form->text]]);
+        }
+
+        $query->groupBy('p.id');
+
+        return $this->getProvider($query);
     }
 }
