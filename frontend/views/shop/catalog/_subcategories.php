@@ -7,9 +7,11 @@ use yii\helpers\Url;
 ?>
 
 <? if ($category->children): ?>
-    <div class="list-group-item" style="padding: 15px; margin-bottom: 15px;">
-        <? foreach ($category->children as $child): ?>
-            <a href="<?= Html::encode(Url::to(['category', 'id' => $child->id])) ?>"><?= Html::encode($child->name) ?></a> &nbsp;
-        <? endforeach; ?>
+    <div class="card mb-3">
+        <div class="card-body">
+            <? foreach ($category->children as $child): ?>
+                <a href="<?= Html::encode(Url::to(['category', 'id' => $child->id])) ?>"><?= Html::encode($child->name) ?></a> &nbsp;
+            <? endforeach; ?>
+        </div>
     </div>
 <? endif; ?>

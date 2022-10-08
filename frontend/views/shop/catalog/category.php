@@ -30,8 +30,10 @@ $this->params['active_category'] = $category;
 ])?>
 
 <? if (trim($category->description)): ?>
-    <div class="list-group-item" style="padding: 15px; margin-bottom: 15px; word-break: break-word;">
-        <?= Yii::$app->formatter->asNtext($category->description) ?>
+    <div class="card mb-3">
+        <div class="card-body">
+            <?= Yii::$app->formatter->asNtext($category->description) ?>
+        </div>
     </div>
 <? endif; ?>
 
