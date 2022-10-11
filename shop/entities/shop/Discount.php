@@ -46,6 +46,11 @@ class Discount extends ActiveRecord
         $this->active = false;
     }
 
+    public function isEnabled() : bool
+    {
+        return true;
+    }
+
     public static function tableName() : string
     {
         return '{{%shop_discounts}}';
