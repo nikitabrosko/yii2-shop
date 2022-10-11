@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\widgets;
+namespace frontend\widgets\shop;
 
 use shop\readModels\shop\ProductReadRepository;
 use yii\base\Widget;
