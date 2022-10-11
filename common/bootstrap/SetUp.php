@@ -2,6 +2,9 @@
 
 namespace common\bootstrap;
 
+use shop\cart\Cart;
+use shop\cart\cost\calculator\SimpleCost;
+use shop\cart\storage\SessionStorage;
 use shop\services\auth\PasswordResetService;
 use shop\services\auth\SignupService;
 use shop\services\contact\ContactService;
@@ -33,6 +36,13 @@ class SetUp implements BootstrapInterface {
 
         $container->setSingleton(Cache::class, function () use ($app) {
             return $app->cache;
+        });
+
+        $container->setSingleton(Cart::class, function () {
+            return new Cart(
+                new SessionStorage('cart', \Yii::$app->session),
+                new SimpleCost()
+            );
         });
     }
 }
