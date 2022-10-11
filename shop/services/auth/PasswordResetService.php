@@ -38,7 +38,7 @@ class PasswordResetService
         if (!$this
             ->mailer
             ->compose(
-                ['html' => 'auth/passwordReset/confirm-html', 'text' => 'auth/passwordReset/confirm-text'],
+                ['html' => 'auth/reset/confirm-html', 'text' => 'auth/reset/confirm-text'],
                 ['user' => $user]
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])

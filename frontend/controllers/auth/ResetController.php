@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 
-class PasswordResetController extends Controller
+class ResetController extends Controller
 {
     public $layout = 'cabinet';
 
