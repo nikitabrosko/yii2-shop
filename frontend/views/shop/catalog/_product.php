@@ -13,7 +13,7 @@ $url = Url::to(['product', 'id' => $product->id]);
 ?>
 
 <div class="col">
-    <form method="post" data-oc-toggle="ajax" data-oc-load="https://demo.opencart.com/index.php?route=common/cart|info&amp;language=en-gb" data-oc-target="#header-cart">
+    <form method="post" data-oc-toggle="ajax" data-oc-load="" data-oc-target="#header-cart">
         <div class="product-thumb">
             <? if ($product->mainPhoto): ?>
                 <div class="image">
@@ -36,9 +36,9 @@ $url = Url::to(['product', 'id' => $product->id]);
                     </div>
                 </div>
                 <div class="button-group">
-                    <button type="submit" formaction="https://demo.opencart.com/index.php?route=checkout/cart|add&amp;language=en-gb" data-bs-toggle="tooltip" title="Add to Cart"><i class="fas fa-shopping-cart"></i></button>
-                    <button type="submit" formaction="https://demo.opencart.com/index.php?route=account/wishlist|add&amp;language=en-gb" data-bs-toggle="tooltip" title="Add to Wish List"><i class="fas fa-heart"></i></button>
-                    <button type="submit" formaction="https://demo.opencart.com/index.php?route=product/compare|add&amp;language=en-gb" data-bs-toggle="tooltip" title="Compare this Product"><i class="fas fa-exchange-alt"></i></button>
+                    <button type="submit" formaction="" data-bs-toggle="tooltip" title="Add to Cart"><i class="fas fa-shopping-cart"></i></button>
+                    <button type="submit" formaction="<?= Html::encode(Url::to(['cabinet/wishlist/add', 'id' => $product->id])) ?>" data-bs-toggle="tooltip" title="Add to Wish List"><i class="fas fa-heart"></i></button>
+                    <button type="submit" formaction="" data-bs-toggle="tooltip" title="Compare this Product"><i class="fas fa-exchange-alt"></i></button>
                 </div>
             </div>
             <input type="hidden" name="product_id" value="42" />

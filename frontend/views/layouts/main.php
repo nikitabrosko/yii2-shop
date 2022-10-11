@@ -65,9 +65,9 @@ AppAsset::register($this);
                         </ul>
                     </div>
                 </li>
-                <li class="list-inline-item"><a href="https://demo.opencart.com/index.php?route=account/wishlist&amp;language=en-gb" id="wishlist-total" title="Wish List (0)"><i class="fas fa-heart"></i> <span class="d-none d-md-inline">Wish List (0)</span></a></li>
-                <li class="list-inline-item"><a href="https://demo.opencart.com/index.php?route=checkout/cart&amp;language=en-gb" title="Shopping Cart"><i class="fas fa-shopping-cart"></i> <span class="d-none d-md-inline">Shopping Cart</span></a></li>
-                <li class="list-inline-item"><a href="https://demo.opencart.com/index.php?route=checkout/checkout&amp;language=en-gb" title="Checkout"><i class="fas fa-share"></i> <span class="d-none d-md-inline">Checkout</span></a></li>
+                <li class="list-inline-item"><a href="<?= Html::encode(Url::to(['/cabinet/wishlist/wishlist'])) ?>" id="wishlist-total" title="Wish List (0)"><i class="fas fa-heart"></i> <span class="d-none d-md-inline">Wish List (0)</span></a></li>
+                <li class="list-inline-item"><a href="" title="Shopping Cart"><i class="fas fa-shopping-cart"></i> <span class="d-none d-md-inline">Shopping Cart</span></a></li>
+                <li class="list-inline-item"><a href="" title="Checkout"><i class="fas fa-share"></i> <span class="d-none d-md-inline">Checkout</span></a></li>
             </ul>
         </div>
     </div>

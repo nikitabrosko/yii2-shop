@@ -82,7 +82,7 @@ MagnificPopupAsset::register($this);
                 </ul>
                 <form method="post" data-oc-toggle="ajax">
                     <div class="btn-group">
-                        <button type="submit" formaction="https://demo.opencart.com/index.php?route=account/wishlist|add&amp;language=en-gb" data-bs-toggle="tooltip" class="btn btn-light" title="Add to Wish List" onclick="wishlist.add('42');"><i class="fas fa-heart"></i></button>
+                        <button type="submit" formaction="<?= Html::encode(Url::to(['cabinet/wishlist/add', 'id' => $product->id])) ?>" data-bs-toggle="tooltip" class="btn btn-light" title="Add to Wish List" onclick="wishlist.add('42');"><i class="fas fa-heart"></i></button>
                         <button type="submit" formaction="https://demo.opencart.com/index.php?route=product/compare|add&amp;language=en-gb" data-bs-toggle="tooltip" class="btn btn-light" title="Compare this Product" onclick="compare.add('42');"><i class="fas fa-exchange-alt"></i></button>
                     </div>
                     <input type="hidden" name="product_id" value="42" />
