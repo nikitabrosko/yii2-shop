@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $product shop\entities\shop\product\Product */
-/* @var $addToCartForm shop\forms\shop\AddToCartForm */
+/* @var $cartForm shop\forms\shop\AddToCartForm */
 /* @var $reviewForm shop\forms\Shop\ReviewForm */
 
 use frontend\assets\MagnificPopupAsset;
@@ -89,30 +89,33 @@ MagnificPopupAsset::register($this);
                 </form>
                 <br />
                 <div id="product">
-                    <form id="form-product">
-                        <hr>
-                        <h3>Available Options</h3>
+                    <hr>
+                    <h3>Available Options</h3>
 
-                        <? $form = ActiveForm::begin() ?>
+                    <?php $form = ActiveForm::begin([
+                        'action' => ['/shop/cart/add', 'id' => $product->id],
+                    ]) ?>
 
+                    <?php if ($modifications = $cartForm->modificationsList()): ?>
                         <div class="mb-3">
-                            <?= $form->field($addToCartForm, 'modification')->dropDownList($addToCartForm->modificationsList(),
-                                ['prompt' => 'Choose modification', 'class' => 'form-select']) ?>
+                            <?= $form->field($cartForm, 'modification')->dropDownList($modifications,
+                                ['prompt' => 'Select modification', 'class' => 'form-select']) ?>
                         </div>
-                        <div class="mb-3">
-                            <?= $form->field($addToCartForm, 'quantity')->textInput() ?>
-                        </div>
+                    <?php endif; ?>
 
-                        <div class="mb-3">
-                            <?= Html::submitButton('Add to Cart', ['class' => 'btn btn-primary btn-lg btn-block']) ?>
-                        </div>
+                    <div class="mb-3">
+                        <?= $form->field($cartForm, 'quantity')->textInput() ?>
+                    </div>
 
-                        <? ActiveForm::end() ?>
+                    <div class="mb-3">
+                        <?= Html::submitButton('Add to Cart', ['class' => 'btn btn-primary btn-lg btn-block']) ?>
+                    </div>
 
-                        <div class="rating">
-                            <p><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span> <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">0 reviews</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">Write a review</a></p>
-                        </div>
-                    </form>
+                    <? ActiveForm::end() ?>
+
+                    <div class="rating">
+                        <p><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span><span class="fas fa-stack"><i class="far fa-star fa-stack-1x"></i></span> <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">0 reviews</a> / <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">Write a review</a></p>
+                    </div>
                 </div>
             </div>
             <ul class="nav nav-tabs">

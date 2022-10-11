@@ -1,14 +1,12 @@
 <?php
 
-/** @var \yii\web\View $this */
+/** @var yii\web\View $this */
 /** @var string $content */
 
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
-use yii\bootstrap4\Breadcrumbs;
+use frontend\widgets\shop\CartWidget;
 use yii\bootstrap4\Html;
-use yii\bootstrap4\Nav;
-use yii\bootstrap4\NavBar;
 use yii\helpers\Url;
 
 AppAsset::register($this);
@@ -33,7 +31,8 @@ AppAsset::register($this);
     <div class="container">
         <div class="nav float-start">
             <ul class="list-inline">
-                <li class="list-inline-item"> <form action="https://demo.opencart.com/index.php?route=common/currency|save&amp;language=en-gb" method="post" enctype="multipart/form-data" id="form-currency">
+                <li class="list-inline-item">
+                    <form action="https://demo.opencart.com/index.php?route=common/currency|save&amp;language=en-gb" method="post" enctype="multipart/form-data" id="form-currency">
                         <div class="dropdown">
                             <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle"><strong>$</strong> <span class="d-none d-md-inline">Currency</span> <i class="fas fa-caret-down"></i></a>
                             <ul class="dropdown-menu">
@@ -50,10 +49,19 @@ AppAsset::register($this);
         </div>
         <div class="nav float-end">
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="https://demo.opencart.com/index.php?route=information/contact&amp;language=en-gb"><i class="fas fa-phone"></i></a> <span class="d-none d-md-inline">123456789</span></li>
+                <li class="list-inline-item">
+                    <a href="https://demo.opencart.com/index.php?route=information/contact&amp;language=en-gb">
+                        <i class="fas fa-phone"></i>
+                    </a>
+                    <span class="d-none d-md-inline">123456789</span>
+                </li>
                 <li class="list-inline-item">
                     <div class="dropdown">
-                        <a href="" class="dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user"></i> <span class="d-none d-md-inline">My Account</span> <i class="fas fa-caret-down"></i></a>
+                        <a href="" class="dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i>
+                            <span class="d-none d-md-inline">My Account</span>
+                            <i class="fas fa-caret-down"></i>
+                        </a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <?php if (Yii::$app->user->isGuest): ?>
                                 <li class="nav-item"><a href="<?= Html::encode(Url::to(['/auth/login'])) ?>" class="nav-link">Login</a></li>
@@ -66,7 +74,7 @@ AppAsset::register($this);
                     </div>
                 </li>
                 <li class="list-inline-item"><a href="<?= Html::encode(Url::to(['/cabinet/wishlist/wishlist'])) ?>" id="wishlist-total" title="Wish List (0)"><i class="fas fa-heart"></i> <span class="d-none d-md-inline">Wish List (0)</span></a></li>
-                <li class="list-inline-item"><a href="" title="Shopping Cart"><i class="fas fa-shopping-cart"></i> <span class="d-none d-md-inline">Shopping Cart</span></a></li>
+                <li class="list-inline-item"><a href="<?= Html::encode(Url::to(['/shop/cart/cart'])) ?>" title="Shopping Cart"><i class="fas fa-shopping-cart"></i> <span class="d-none d-md-inline">Shopping Cart</span></a></li>
                 <li class="list-inline-item"><a href="" title="Checkout"><i class="fas fa-share"></i> <span class="d-none d-md-inline">Checkout</span></a></li>
             </ul>
         </div>
@@ -90,15 +98,7 @@ AppAsset::register($this);
                 </div>
                 <?= Html::endForm() ?>
             </div>
-            <div id="header-cart" class="col-md-4 col-lg-3"><div class="dropdown d-grid">
-                    <button type="button" data-bs-toggle="dropdown" class="btn btn-inverse btn-block dropdown-toggle"><i class="fas fa-shopping-cart"></i> 0 item(s) - $0.00</button>
-                    <ul class="dropdown-menu dropdown-menu-right" style="width: 500px;">
-                        <li>
-                            <p class="text-center">Your shopping cart is empty!</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <?= CartWidget::widget() ?>
         </div>
     </div>
 </header>

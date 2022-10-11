@@ -36,7 +36,7 @@ $url = Url::to(['product', 'id' => $product->id]);
                     </div>
                 </div>
                 <div class="button-group">
-                    <button type="submit" formaction="" data-bs-toggle="tooltip" title="Add to Cart"><i class="fas fa-shopping-cart"></i></button>
+                    <button type="submit" formaction="<?= Html::encode(Url::to(['shop/cart/add', 'id' => $product->id])) ?>" data-bs-toggle="tooltip" title="Add to Cart"><i class="fas fa-shopping-cart"></i></button>
                     <button type="submit" formaction="<?= Html::encode(Url::to(['cabinet/wishlist/add', 'id' => $product->id])) ?>" data-bs-toggle="tooltip" title="Add to Wish List"><i class="fas fa-heart"></i></button>
                     <button type="submit" formaction="" data-bs-toggle="tooltip" title="Compare this Product"><i class="fas fa-exchange-alt"></i></button>
                 </div>
