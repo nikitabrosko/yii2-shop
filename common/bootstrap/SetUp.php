@@ -3,6 +3,7 @@
 namespace common\bootstrap;
 
 use shop\cart\Cart;
+use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\storage\SessionStorage;
 use shop\services\auth\PasswordResetService;
@@ -41,7 +42,7 @@ class SetUp implements BootstrapInterface {
         $container->setSingleton(Cart::class, function () {
             return new Cart(
                 new SessionStorage('cart', \Yii::$app->session),
-                new SimpleCost()
+                new DynamicCost(new SimpleCost())
             );
         });
     }
