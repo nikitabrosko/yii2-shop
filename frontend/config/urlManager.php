@@ -12,8 +12,10 @@ return [
         'auth/signup' => 'auth/signup/signup',
         'auth/<_a:login|logout>' => 'auth/auth/<_a>',
         'auth/signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
+        'auth/reset' => 'auth/reset/request',
 
         'cabinet' => 'cabinet/default/cabinet',
+        'wishlist' => 'cabinet/wishlist/wishlist',
         'cabinet/<_c:[\w\-]+>' => 'cabinet/<_c>/cabinet',
         'cabinet/<_c:[\w\-]+>/<id:\d+>' => 'cabinet/<_c>/view',
         'cabinet/<_c:[\w\-]+>/<_a:[\w-]+>' => 'cabinet/<_c>/<_a>',
