@@ -3,6 +3,7 @@
 namespace shop\entities\user;
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
+use shop\exceptions\NotFoundException;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -26,6 +27,7 @@ use yii\web\IdentityInterface;
  * @property string $password write-only password
  *
  * @property Network[] $networks
+ * @property WishlistItem[] $wishlistItems
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -87,6 +89,37 @@ class User extends ActiveRecord implements IdentityInterface
         $this->networks = $networks;
     }
 
+    public function addToWishList($productId)
+    {
+        $items = $this->wishlistItems;
+
+        foreach ($items as $item) {
+            if ($item->isForProduct($productId)) {
+                throw new \DomainException('Item is already added.');
+            }
+        }
+
+        $items[] = WishlistItem::create($productId);
+
+        $this->wishlistItems = $items;
+    }
+
+    public function removeFromWishList($productId)
+    {
+        $items = $this->wishlistItems;
+
+        foreach ($items as $i => $item) {
+            if ($item->isForProduct($productId)) {
+                unset($items[$i]);
+                $this->wishlistItems = $items;
+
+                return;
+            }
+        }
+
+        throw new NotFoundException('Item is not found.');
+    }
+
     public function isActive() : bool
     {
         return $this->status == self::isActive();
@@ -95,6 +128,11 @@ class User extends ActiveRecord implements IdentityInterface
     public function getNetworks() : ActiveQuery
     {
         return $this->hasMany(Network::class, ['user_id' => 'id']);
+    }
+
+    public function getWishlistItems() : ActiveQuery
+    {
+        return $this->hasMany(WishlistItem::class, ['user_id' => 'id']);
     }
 
     /**
@@ -111,10 +149,10 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            TimestampBehavior::class,
             [
                 'class' => SaveRelationsBehavior::class,
-                'relations' => ['networks'],
+                'relations' => ['networks', 'wishlistItems'],
             ],
         ];
     }

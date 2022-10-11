@@ -9,6 +9,7 @@ use shop\entities\shop\Brand;
 use shop\entities\shop\Category;
 use shop\entities\shop\product\queries\ProductQuery;
 use shop\entities\shop\Tag;
+use shop\entities\user\WishlistItem;
 use shop\exceptions\AlreadyExistsException;
 use shop\exceptions\NotFoundException;
 use yii\db\ActiveQuery;
@@ -542,6 +543,11 @@ class Product extends ActiveRecord
     public function getMainPhoto(): ActiveQuery
     {
         return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
+    }
+
+    public function getWishlistItems(): ActiveQuery
+    {
+        return $this->hasMany(WishlistItem::class, ['product_id' => 'id']);
     }
 
     public static function tableName() : string
