@@ -27,6 +27,8 @@ return [
 
         'cart' => 'shop/cart/cart',
 
+        'checkout' => 'shop/checkout/checkout',
+
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
         '<_c:[\w\-]+>/<_a:[\w-]+>' => '<_c>/<_a>',
