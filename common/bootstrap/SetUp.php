@@ -42,7 +42,7 @@ class SetUp implements BootstrapInterface {
 
         $container->setSingleton(Cart::class, function () {
             return new Cart(
-                new CookieStorage('cart', 3600),
+                new CookieStorage('cart', strtotime('+1 year', time())),
                 new DynamicCost(new SimpleCost())
             );
         });

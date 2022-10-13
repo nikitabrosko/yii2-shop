@@ -19,7 +19,7 @@ use frontend\widgets\shop\FeaturedProductsWidget;
                         <div class="carousel-item active">
                             <div class="row justify-content-center">
                                 <div class="col-12 text-center">
-                                    <a href="index.php?route=product/product&amp;path=57&amp;product_id=49"><img src="https://demo.opencart.com/image/cache/catalog/demo/banners/iPhone6-1140x380.jpg" alt="iPhone 6" class="img-fluid" /></a>
+                                    <img src="https://demo.opencart.com/image/cache/catalog/demo/banners/iPhone6-1140x380.jpg" alt="iPhone 6" class="img-fluid" />
                                 </div>
                             </div>
                         </div>
