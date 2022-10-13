@@ -37,6 +37,20 @@ class CartItem
         return $this->quantity;
     }
 
+    public function getProductId() : int
+    {
+        return $this->product->id;
+    }
+
+    public function getModificationId()
+    {
+        if ($this->modificationId) {
+            return $this->modificationId;
+        }
+
+        return null;
+    }
+
     public function getId() : string
     {
         return md5(serialize([$this->product->id, $this->modificationId]));
