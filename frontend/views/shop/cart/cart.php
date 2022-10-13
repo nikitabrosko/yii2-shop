@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             <span class="input-group-btn">
                                     <button type="submit" title="" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
                                     <a title="Remove" class="btn btn-danger" href="<?= Html::encode(Url::to(['remove', 'id' => $item->getId()])) ?>" data-method="post"><i class="fa fa-times-circle"></i></a>
-                                </span>
+                            </span>
                         </div>
                         <?= Html::endForm() ?>
                     </td>

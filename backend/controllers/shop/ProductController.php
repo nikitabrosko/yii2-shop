@@ -9,6 +9,7 @@ use shop\forms\manage\shop\product\PhotosForm;
 use shop\forms\manage\shop\product\PriceForm;
 use shop\forms\manage\shop\product\ProductCreateForm;
 use shop\forms\manage\shop\product\ProductEditForm;
+use shop\forms\manage\shop\product\QuantityForm;
 use shop\forms\manage\shop\product\TagsForm;
 use shop\services\manage\shop\ProductManageService;
 use Yii;
@@ -181,6 +182,27 @@ class ProductController extends Controller
         }
 
         return $this->render('price', [
+            'model' => $form,
+            'product' => $product,
+        ]);
+    }
+
+    public function actionQuantity($id)
+    {
+        $product = $this->findModel($id);
+
+        $form = new QuantityForm($product);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->productManageService->changeQuantity($product->id, $form);
+
+                return $this->redirect(['view', 'id' => $product->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        return $this->render('quantity', [
             'model' => $form,
             'product' => $product,
         ]);

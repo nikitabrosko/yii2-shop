@@ -10,6 +10,7 @@ class ModificationForm extends Model
     public $code;
     public $name;
     public $price;
+    public $quantity;
 
     public function __construct(Modification $modification = null, $config = [])
     {
@@ -17,7 +18,9 @@ class ModificationForm extends Model
             $this->code = $modification->code;
             $this->name = $modification->name;
             $this->price = $modification->price;
+            $this->quantity = $modification->quantity;
         }
+
         parent::__construct($config);
     }
 
@@ -25,7 +28,7 @@ class ModificationForm extends Model
     {
         return [
             [['code', 'name'], 'required'],
-            ['price', 'integer'],
+            [['price', 'quantity'], 'integer'],
         ];
     }
 }

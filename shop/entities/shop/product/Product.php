@@ -128,6 +128,25 @@ class Product extends ActiveRecord
         return $this->status == self::STATUS_DRAFT;
     }
 
+    public function isAvailable() : bool
+    {
+        return $this->quantity > 0;
+    }
+
+    public function canChangeQuantity() : bool
+    {
+        return !$this->modifications;
+    }
+
+    public function canBeCheckout($modificationId, $quantity) : bool
+    {
+        if ($modificationId) {
+            return $quantity <= $this->getModification($modificationId)->quantity;
+        }
+
+        return $quantity <= $this->quantity;
+    }
+
     public function updateValue($id, $value)
     {
         $values = $this->values;
@@ -156,7 +175,7 @@ class Product extends ActiveRecord
         return Value::blank($id);
     }
 
-    public function getModification($id) : Modification
+    public function getModification($id) : ?Modification
     {
         foreach ($this->modifications as $modification) {
             if ($modification->isIdEqualTo($id)) {
@@ -164,10 +183,10 @@ class Product extends ActiveRecord
             }
         }
 
-        throw new NotFoundException('Modification not found.');
+        throw new NotFoundException('Modification is not found.');
     }
 
-    public function addModification($code, $name, $price)
+    public function addModification($code, $name, $price, $quantity)
     {
         $modifications = $this->modifications;
 
@@ -177,22 +196,29 @@ class Product extends ActiveRecord
             }
         }
 
-        $modifications[] = Modification::create($code, $name, $price);
-        $this->modifications = $modifications;
+        $modifications[] = Modification::create($code, $name, $price, $quantity);
+        $this->updateModifications($modifications);
     }
 
-    public function editModification($id, $code, $name, $price)
+    public function editModification($id, $code, $name, $price, $quantity)
     {
         $modifications = $this->modifications;
 
         if (!$this->doWithForeach($modifications, $id,
-            function(Modification $modification, array $modifications) use ($code, $name, $price)
-            {
-                $modification->edit($code, $name, $price);
-                $this->modifications = $modifications;
+            function(Modification $modification, array $modifications) use ($code, $name, $price, $quantity) {
+                $modification->edit($code, $name, $price, $quantity);
+                $this->updateModifications($modifications);
             })) {
             throw new NotFoundException('Modification not found.');
         }
+    }
+
+    public function updateModifications(array $modifications)
+    {
+        $this->modifications = $modifications;
+        $this->quantity = array_sum(array_map(function (Modification $modification) {
+            return $modification->quantity;
+        }, $this->modifications));
     }
 
     public function removeModification($id): void
