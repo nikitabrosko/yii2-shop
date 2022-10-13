@@ -23,7 +23,7 @@ class ValueForm extends Model
     {
         return array_filter([
             $this->_characteristic->isString() ? ['equal', 'string'] : false,
-            $this->_characteristic->isInteger() || $this->_characteristic->isFloat()? [['from', 'to'], 'integer'] : false
+            $this->_characteristic->isInteger() || $this->_characteristic->isFloat() ? [['from', 'to'], 'integer'] : false
         ]);
     }
 
