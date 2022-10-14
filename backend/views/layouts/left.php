@@ -36,14 +36,17 @@
                     ['label' => 'Users', 'icon' => 'user', 'url' => ['/user/index'], 'active' => $this->context->id == 'user/index'],
 
                     ['label' => 'Shop', 'icon' => 'folder', 'items' => [
-                        ['label' => 'Brand', 'icon' => 'file-o', 'url' => ['shop/brand/index'], 'active' => $this->context->id == 'shop/brand/index'],
-                        ['label' => 'Tag', 'icon' => 'file-o', 'url' => ['shop/tag/index'], 'active' => $this->context->id == 'shop/tag/index'],
-                        ['label' => 'Category', 'icon' => 'file-o', 'url' => ['shop/category/index'], 'active' => $this->context->id == 'shop/category/index'],
-                        ['label' => 'Characteristic', 'icon' => 'file-o', 'url' => ['shop/characteristic/index'], 'active' => $this->context->id == 'shop/characteristic/index'],
+                        ['label' => 'Brands', 'icon' => 'file-o', 'url' => ['shop/brand/index'], 'active' => $this->context->id == 'shop/brand/index'],
+                        ['label' => 'Tags', 'icon' => 'file-o', 'url' => ['shop/tag/index'], 'active' => $this->context->id == 'shop/tag/index'],
+                        ['label' => 'Categories', 'icon' => 'file-o', 'url' => ['shop/category/index'], 'active' => $this->context->id == 'shop/category/index'],
+                        ['label' => 'Characteristics', 'icon' => 'file-o', 'url' => ['shop/characteristic/index'], 'active' => $this->context->id == 'shop/characteristic/index'],
                         ['label' => 'Products', 'icon' => 'file-o', 'url' => ['shop/product/index'], 'active' => $this->context->id == 'shop/product/index'],
                         ['label' => 'Delivery methods', 'icon' => 'file-o', 'url' => ['shop/delivery/index'], 'active' => $this->context->id == 'shop/delivery/index'],
                         ['label' => 'Orders', 'icon' => 'file-o', 'url' => ['shop/order/index'], 'active' => $this->context->id == 'shop/order/index'],
                         ['label' => 'Discounts', 'icon' => 'file-o', 'url' => ['shop/discount/index'], 'active' => $this->context->id == 'shop/discount/index'],
+                    ]],
+                    ['label' => 'Blog', 'icon' => 'folder', 'items' => [
+                        ['label' => 'Tags', 'icon' => 'file-o', 'url' => ['blog/tag/index'], 'active' => $this->context->id == 'blog/tag/index'],
                     ]],
                 ],
             ]
