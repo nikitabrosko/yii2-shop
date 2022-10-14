@@ -4,6 +4,7 @@ namespace shop\services\manage\blog;
 
 use shop\entities\blog\Category;
 use shop\entities\Meta;
+use shop\exceptions\NotFoundException;
 use shop\forms\manage\blog\CategoryForm;
 
 class CategoryManageService
@@ -57,6 +58,10 @@ class CategoryManageService
 
     private function getCategory($id) : Category
     {
-        return Category::findOne($id);
+        if (!$category = Category::findOne($id)) {
+            throw new NotFoundException('Category not found.');
+        }
+
+        return $category;
     }
 }

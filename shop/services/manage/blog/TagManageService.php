@@ -3,6 +3,7 @@
 namespace shop\services\manage\blog;
 
 use shop\entities\blog\Tag;
+use shop\exceptions\NotFoundException;
 use shop\forms\manage\blog\TagForm;
 
 class TagManageService
@@ -40,6 +41,10 @@ class TagManageService
 
     private function getTag($id) : Tag
     {
-        return Tag::findOne($id);
+        if (!$tag = Tag::findOne($id)) {
+            throw new NotFoundException('Tag not found.');
+        }
+
+        return $tag;
     }
 }
