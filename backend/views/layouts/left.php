@@ -48,6 +48,7 @@
                     ['label' => 'Blog', 'icon' => 'folder', 'items' => [
                         ['label' => 'Tags', 'icon' => 'file-o', 'url' => ['blog/tag/index'], 'active' => $this->context->id == 'blog/tag/index'],
                         ['label' => 'Category', 'icon' => 'file-o', 'url' => ['blog/category/index'], 'active' => $this->context->id == 'blog/category/index'],
+                        ['label' => 'Posts', 'icon' => 'file-o', 'url' => ['blog/post/index'], 'active' => $this->context->id == 'blog/post/index'],
                     ]],
                 ],
             ]
