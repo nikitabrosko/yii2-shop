@@ -6,6 +6,7 @@ use shop\entities\shop\queries\DiscountQuery;
 use yii\db\ActiveRecord;
 
 /**
+ * @property integer $id
  * @property integer $percent
  * @property string $name
  * @property integer $from_date
@@ -34,15 +35,24 @@ class Discount extends ActiveRecord
         $this->name = $name;
         $this->from_date = $fromDate;
         $this->to_date = $toDate;
+        $this->sort = $sort;
     }
 
     public function activate()
     {
+        if ($this->active) {
+            throw new \DomainException('Discount is already active.');
+        }
+
         $this->active = true;
     }
 
     public function draft()
     {
+        if (!$this->active) {
+            throw new \DomainException('Discount is already draft.');
+        }
+
         $this->active = false;
     }
 
@@ -59,5 +69,23 @@ class Discount extends ActiveRecord
     public static function find() : DiscountQuery
     {
         return new DiscountQuery(static::class);
+    }
+
+    public function save($runValidation = true, $attributeNames = null) : bool
+    {
+        if (!parent::save($runValidation, $attributeNames)) {
+            throw new \DomainException('Discount saving error.');
+        }
+
+        return true;
+    }
+
+    public function delete() : bool
+    {
+        if (!parent::delete()) {
+            throw new \DomainException('Discount removing error.');
+        }
+
+        return true;
     }
 }

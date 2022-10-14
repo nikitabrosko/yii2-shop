@@ -23,9 +23,10 @@ class DeliveryMethodManageService
         return $method;
     }
 
-    public function edit($id, DeliveryMethodForm $form): void
+    public function edit($id, DeliveryMethodForm $form)
     {
         $method = $this->getDeliveryMethod($id);
+
         $method->edit(
             $form->name,
             $form->cost,
@@ -37,14 +38,14 @@ class DeliveryMethodManageService
         $method->save();
     }
 
-    public function remove($id): void
+    public function remove($id)
     {
         $method = $this->getDeliveryMethod($id);
 
         $method->delete();
     }
 
-    private function getDeliveryMethod($id)
+    private function getDeliveryMethod($id) : DeliveryMethod
     {
         if (!$tag = DeliveryMethod::findOne(['id' => $id])) {
             throw new NotFoundException('Tag not found.');
