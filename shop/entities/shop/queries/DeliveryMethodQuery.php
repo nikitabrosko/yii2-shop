@@ -10,7 +10,7 @@ class DeliveryMethodQuery extends ActiveQuery
     {
         return $this->andWhere(['and',
             ['or', ['min_weight' => null], ['<=', 'min_weight', $weight]],
-            ['or', ['min_weight' => null], ['>=', 'min_weight', $weight]],
+            ['or', ['max_weight' => null], ['>=', 'max_weight', $weight]],
         ]);
     }
 }
