@@ -13,6 +13,11 @@ return [
             'class' => 'yii\caching\FileCache',
             'cachePath' => '@common/runtime/cache',
         ],
+        'robokassa' => [
+            'class' => '\robokassa\Merchant',
+            'baseUrl' => 'https://auth.robokassa.ru/Merchant/Index.aspx',
+            'isTest' => !YII_ENV_PROD,
+        ],
     ],
 ];
 

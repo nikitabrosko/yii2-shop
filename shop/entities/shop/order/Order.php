@@ -24,6 +24,7 @@ use yii\helpers\Json;
  *
  * @property CustomerData $customerData
  * @property DeliveryData $deliveryData
+ * @property User $user
  *
  * @property OrderItem[] $items
  * @property Status[] $statuses
@@ -149,7 +150,7 @@ class Order extends ActiveRecord
 
     public function getUser(): ActiveQuery
     {
-        return $this->hasMany(User::class, ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     public function getDeliveryMethod(): ActiveQuery
