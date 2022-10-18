@@ -29,6 +29,12 @@ return [
 
         'checkout' => 'shop/checkout/checkout',
 
+        'blog' => 'blog/post/blog',
+        'blog/tag/<slug:[\w\-]+>' => 'blog/post/tag',
+        'blog/<id:\d+>' => 'blog/post/post',
+        'blog/<id:\d+>/comment' => 'blog/post/comment',
+        'blog/<slug:[\w\-]+>' => 'blog/post/category',
+
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
         '<_c:[\w\-]+>/<_a:[\w-]+>' => '<_c>/<_a>',
