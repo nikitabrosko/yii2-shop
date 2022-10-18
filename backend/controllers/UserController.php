@@ -37,6 +37,8 @@ class UserController extends Controller
                     'class' => VerbFilter::className(),
                     'actions' => [
                         'delete' => ['POST'],
+                        'activate' => ['POST'],
+                        'disable' => ['POST'],
                     ],
                 ],
             ]
@@ -121,6 +123,28 @@ class UserController extends Controller
             'model' => $form,
             'user' => $user,
         ]);
+    }
+
+    public function actionActivate($id)
+    {
+        try {
+            $this->userManageService->activate($id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    public function actionDisable($id)
+    {
+        try {
+            $this->userManageService->disable($id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**

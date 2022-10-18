@@ -122,7 +122,17 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function isActive() : bool
     {
-        return $this->status == self::isActive();
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function activate()
+    {
+        $this->status = self::STATUS_ACTIVE;
+    }
+
+    public function disable()
+    {
+        $this->status = self::STATUS_INACTIVE;
     }
 
     public function getNetworks() : ActiveQuery

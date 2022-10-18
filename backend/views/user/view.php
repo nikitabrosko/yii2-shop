@@ -14,6 +14,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
     <p>
+        <?php if ($model->isActive()): ?>
+            <?= Html::a('Disable', ['disable', 'id' => $model->id], ['class' => 'btn btn-primary', 'data-method' => 'post']) ?>
+        <?php else: ?>
+            <?= Html::a('Activate', ['activate', 'id' => $model->id], ['class' => 'btn btn-success', 'data-method' => 'post']) ?>
+        <?php endif; ?>
+
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
