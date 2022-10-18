@@ -35,6 +35,7 @@
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
                     ['label' => 'Users', 'icon' => 'user', 'url' => ['/user/index'], 'active' => $this->context->id == 'user/index'],
                     ['label' => 'Pages', 'icon' => 'file-o', 'url' => ['/page/index'], 'active' => $this->context->id == 'page/index'],
+                    ['label' => 'Files', 'icon' => 'file-o', 'url' => ['/file/index'], 'active' => $this->context->id == 'file/index'],
 
                     ['label' => 'Shop', 'icon' => 'folder', 'items' => [
                         ['label' => 'Brands', 'icon' => 'file-o', 'url' => ['shop/brand/index'], 'active' => $this->context->id == 'shop/brand/index'],
