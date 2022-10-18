@@ -2,6 +2,8 @@
 
 namespace common\bootstrap;
 
+use mihaildev\ckeditor\CKEditor;
+use mihaildev\elfinder\ElFinder;
 use shop\cart\Cart;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\cost\calculator\SimpleCost;
@@ -46,5 +48,9 @@ class SetUp implements BootstrapInterface {
                 new DynamicCost(new SimpleCost())
             );
         });
+
+        $container->set(CKEditor::class, [
+            'editorOptions' => ElFinder::ckeditorOptions('elfinder'),
+        ]);
     }
 }
