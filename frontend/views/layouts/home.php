@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use frontend\widgets\blog\LastPostsWidget;
 use frontend\widgets\shop\FeaturedProductsWidget;
 
 ?>
@@ -37,8 +38,14 @@ use frontend\widgets\shop\FeaturedProductsWidget;
                 <h3>Featured</h3>
 
                 <?= FeaturedProductsWidget::widget([
-                    'limit' => 4,
+                    'limit' => 3,
                 ]) ?>
+
+                <h3>Last Posts</h3>
+
+                <?= LastPostsWidget::widget([
+                        'limit' => 3,
+                ])?>
 
                 <div id="carousel-banner-1" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
