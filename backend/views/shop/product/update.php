@@ -1,5 +1,6 @@
 <?php
 
+use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -29,7 +30,7 @@ $this->params['breadcrumbs'][] = 'Update';
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
-            <?= $form->field($model, 'description')->textarea(['rows' => 10]) ?>
+            <?= $form->field($model, 'description')->widget(CKEditor::class) ?>
         </div>
     </div>
 
