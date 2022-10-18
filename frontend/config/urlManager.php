@@ -7,7 +7,6 @@ return [
     'cache' => false,
     'rules' => [
         '' => 'site/index',
-        '<_a:about>' => 'site/<_a>',
         '<_a:contact>' => 'contact/<_a>',
         'auth/signup' => 'auth/signup/signup',
         'auth/<_a:login|logout>' => 'auth/auth/<_a>',
@@ -34,6 +33,8 @@ return [
         'blog/<id:\d+>' => 'blog/post/post',
         'blog/<id:\d+>/comment' => 'blog/post/comment',
         'blog/<slug:[\w\-]+>' => 'blog/post/category',
+
+        ['class' => 'frontend\urls\PageUrlRule'],
 
         '<_c:[\w\-]+>' => '<_c>/index',
         '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
