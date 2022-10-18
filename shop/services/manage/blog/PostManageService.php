@@ -35,16 +35,16 @@ class PostManageService
             )
         );
 
-        if ($form->photo) {
-            $post->setPhoto($form->photo);
-        }
-
-        foreach ($form->tags->existing as $tagId) {
-            $tag = $this->getTagById($tagId);
-            $post->assignTag($tag->id);
-        }
-
         $this->transaction->wrap(function () use ($post, $form) {
+            if ($form->photo) {
+                $post->setPhoto($form->photo);
+            }
+
+            foreach ($form->tags->existing as $tagId) {
+                $tag = $this->getTagById($tagId);
+                $post->assignTag($tag->id);
+            }
+
             foreach ($form->tags->newNames as $tagName) {
                 if (!$tag = $this->getTagByName($tagName)) {
                     $tag = Tag::create($tagName, $tagName);
@@ -78,11 +78,10 @@ class PostManageService
             )
         );
 
-        if ($form->photo) {
-            $post->setPhoto($form->photo);
-        }
-
         $this->transaction->wrap(function () use ($post, $form) {
+            if ($form->photo) {
+                $post->setPhoto($form->photo);
+            }
 
             $post->revokeTags();
             $post->save();
