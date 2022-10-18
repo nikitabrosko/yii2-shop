@@ -308,4 +308,22 @@ class Post extends ActiveRecord
     {
         return new PostQuery(self::class);
     }
+
+    public function save($runValidation = true, $attributeNames = null) : bool
+    {
+        if (!parent::save($runValidation, $attributeNames)) {
+            throw new \DomainException('Post saving error.');
+        }
+
+        return true;
+    }
+
+    public function delete() : bool
+    {
+        if (!parent::delete()) {
+            throw new \DomainException('Post removing error.');
+        }
+
+        return true;
+    }
 }

@@ -76,4 +76,22 @@ class Comment extends ActiveRecord
     {
         return '{{%blog_comments}}';
     }
+
+    public function save($runValidation = true, $attributeNames = null) : bool
+    {
+        if (!parent::save($runValidation, $attributeNames)) {
+            throw new \DomainException('Comment saving error.');
+        }
+
+        return true;
+    }
+
+    public function delete() : bool
+    {
+        if (!parent::delete()) {
+            throw new \DomainException('Comment removing error.');
+        }
+
+        return true;
+    }
 }
