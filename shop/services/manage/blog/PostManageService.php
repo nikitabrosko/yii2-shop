@@ -91,14 +91,15 @@ class PostManageService
                 $tag = $this->getTagById($tagId);
                 $post->assignTag($tag->id);
             }
+
             foreach ($form->tags->newNames as $tagName) {
-                if (!$tag = $this->getTagByName($tagName)) {
+                if (!Tag::findOne(['name' => $tagName])) {
                     $tag = Tag::create($tagName, $tagName);
 
                     $tag->save();
-                }
 
-                $post->assignTag($tag->id);
+                    $post->assignTag($tag->id);
+                }
             }
 
             $post->save();
