@@ -1,6 +1,8 @@
 <?php
 
+use backend\widgets\grid\RoleColumn;
 use kartik\widgets\DatePicker;
+use shop\entities\user\User;
 use shop\helpers\UserHelper;
 use yii\helpers\Html;
 use yii\grid\ActionColumn;
@@ -46,9 +48,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'username',
                     'email:email',
                     [
+                        'attribute' => 'role',
+                        'class' => RoleColumn::class,
+                        'filter' => $searchModel->rolesList(),
+                    ],
+                    [
                         'attribute' => 'status',
                         'filter' => UserHelper::statusList(),
-                        'value' => function (\shop\entities\user\User $user) {
+                        'value' => function (User $user) {
                             return UserHelper::statusLabel($user->status);
                         },
                         'format' => 'raw',
