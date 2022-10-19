@@ -8,7 +8,7 @@ use shop\entities\Blog\Post\Post;
 use shop\entities\Blog\Tag;
 use shop\exceptions\NotFoundException;
 use shop\forms\manage\Blog\Post\PostForm;
-use shop\services\manage\TransactionManager;
+use shop\services\TransactionManager;
 
 class PostManageService
 {

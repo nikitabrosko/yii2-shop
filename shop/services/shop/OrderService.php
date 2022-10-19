@@ -12,7 +12,7 @@ use shop\entities\shop\order\OrderItem;
 use shop\entities\user\User;
 use shop\exceptions\NotFoundException;
 use shop\forms\shop\order\OrderForm;
-use shop\services\manage\TransactionManager;
+use shop\services\TransactionManager;
 
 class OrderService
 {

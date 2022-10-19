@@ -16,7 +16,7 @@ use shop\forms\manage\shop\product\PriceForm;
 use shop\forms\manage\shop\product\ProductCreateForm;
 use shop\forms\manage\shop\product\ProductEditForm;
 use shop\forms\manage\shop\product\QuantityForm;
-use shop\services\manage\TransactionManager;
+use shop\services\TransactionManager;
 
 class ProductManageService
 {
