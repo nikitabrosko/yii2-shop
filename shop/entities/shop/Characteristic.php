@@ -3,6 +3,8 @@
 namespace shop\entities\shop;
 
 use shop\entities\behaviors\JsonArrayBehavior;
+use shop\exceptions\DeleteErrorException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveRecord;
 
 /**
@@ -86,7 +88,7 @@ class Characteristic extends ActiveRecord
     public function save($runValidation = true, $attributeNames = null) : bool
     {
         if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Characteristic saving error.');
+            throw new SavingErrorException('Characteristic saving error.');
         }
 
         return true;
@@ -95,7 +97,7 @@ class Characteristic extends ActiveRecord
     public function delete() : bool
     {
         if (!parent::delete()) {
-            throw new \DomainException('Characteristic removing error.');
+            throw new DeleteErrorException('Characteristic deleting error.');
         }
 
         return true;

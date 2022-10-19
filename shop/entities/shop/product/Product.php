@@ -11,7 +11,9 @@ use shop\entities\shop\product\queries\ProductQuery;
 use shop\entities\shop\Tag;
 use shop\entities\user\WishlistItem;
 use shop\exceptions\AlreadyExistsException;
+use shop\exceptions\DeleteErrorException;
 use shop\exceptions\NotFoundException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
@@ -640,7 +642,7 @@ class Product extends ActiveRecord
     public function save($runValidation = true, $attributeNames = null) : bool
     {
         if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Product saving error.');
+            throw new SavingErrorException('Product saving error.');
         }
 
         return true;
@@ -649,7 +651,7 @@ class Product extends ActiveRecord
     public function delete() : bool
     {
         if (!parent::delete()) {
-            throw new \DomainException('Product removing error.');
+            throw new DeleteErrorException('Product deleting error.');
         }
 
         return true;

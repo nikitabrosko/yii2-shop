@@ -2,6 +2,8 @@
 
 namespace shop\entities\shop;
 
+use shop\exceptions\DeleteErrorException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveRecord;
 
 /**
@@ -26,26 +28,26 @@ class Tag extends ActiveRecord
         $this->slug = $slug;
     }
 
-    public function save($runValidation = true, $attributeNames = null) : bool
-    {
-        if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Tag saving error.');
-        }
-
-        return true;
-    }
-
-    public function delete() : int
-    {
-        if (!parent::delete()) {
-            throw new \DomainException('Tag removing error.');
-        }
-
-        return true;
-    }
-
     public static function tableName() : string
     {
         return '{{%shop_tags}}';
+    }
+
+    public function save($runValidation = true, $attributeNames = null) : bool
+    {
+        if (!parent::save($runValidation, $attributeNames)) {
+            throw new SavingErrorException('Tag saving error.');
+        }
+
+        return true;
+    }
+
+    public function delete() : bool
+    {
+        if (!parent::delete()) {
+            throw new DeleteErrorException('Tag deleting error.');
+        }
+
+        return true;
     }
 }

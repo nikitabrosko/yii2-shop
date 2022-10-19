@@ -8,7 +8,9 @@ use shop\entities\blog\post\queries\PostQuery;
 use shop\entities\Meta;
 use shop\entities\blog\Category;
 use shop\entities\blog\Tag;
+use shop\exceptions\DeleteErrorException;
 use shop\exceptions\NotFoundException;
+use shop\exceptions\SavingErrorException;
 use shop\services\WaterMarker;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -312,7 +314,7 @@ class Post extends ActiveRecord
     public function save($runValidation = true, $attributeNames = null) : bool
     {
         if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Post saving error.');
+            throw new SavingErrorException('Post saving error.');
         }
 
         return true;
@@ -321,7 +323,7 @@ class Post extends ActiveRecord
     public function delete() : bool
     {
         if (!parent::delete()) {
-            throw new \DomainException('Post removing error.');
+            throw new DeleteErrorException('Post deleting error.');
         }
 
         return true;

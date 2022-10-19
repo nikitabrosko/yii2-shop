@@ -4,6 +4,8 @@ namespace shop\entities\blog\post;
 
 use shop\entities\blog\post\queries\PostQuery;
 use shop\entities\user\User;
+use shop\exceptions\DeleteErrorException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveRecord;
 
 /**
@@ -80,7 +82,7 @@ class Comment extends ActiveRecord
     public function save($runValidation = true, $attributeNames = null) : bool
     {
         if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Comment saving error.');
+            throw new SavingErrorException('Comment saving error.');
         }
 
         return true;
@@ -89,7 +91,7 @@ class Comment extends ActiveRecord
     public function delete() : bool
     {
         if (!parent::delete()) {
-            throw new \DomainException('Comment removing error.');
+            throw new DeleteErrorException('Comment deleting error.');
         }
 
         return true;

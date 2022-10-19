@@ -4,6 +4,8 @@ namespace shop\entities;
 
 use paulzi\nestedsets\NestedSetsBehavior;
 use shop\entities\behaviors\MetaBehavior;
+use shop\exceptions\DeleteErrorException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveRecord;
 
 /**
@@ -77,7 +79,7 @@ class Page extends ActiveRecord
     public function save($runValidation = true, $attributeNames = null) : bool
     {
         if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Page saving error.');
+            throw new SavingErrorException('Page saving error.');
         }
 
         return true;
@@ -86,7 +88,7 @@ class Page extends ActiveRecord
     public function delete() : bool
     {
         if (!parent::delete()) {
-            throw new \DomainException('Page removing error.');
+            throw new DeleteErrorException('Page deleting error.');
         }
 
         return true;

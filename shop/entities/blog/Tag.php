@@ -2,6 +2,8 @@
 
 namespace shop\entities\blog;
 
+use shop\exceptions\DeleteErrorException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveRecord;
 
 /**
@@ -33,7 +35,7 @@ class Tag extends ActiveRecord
     public function save($runValidation = true, $attributeNames = null) : bool
     {
         if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Tag saving error.');
+            throw new SavingErrorException('Tag saving error.');
         }
 
         return true;
@@ -42,7 +44,7 @@ class Tag extends ActiveRecord
     public function delete() : bool
     {
         if (!parent::delete()) {
-            throw new \DomainException('Tag removing error.');
+            throw new DeleteErrorException('Tag deleting error.');
         }
 
         return true;

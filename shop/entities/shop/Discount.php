@@ -3,6 +3,8 @@
 namespace shop\entities\shop;
 
 use shop\entities\shop\queries\DiscountQuery;
+use shop\exceptions\DeleteErrorException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveRecord;
 
 /**
@@ -74,7 +76,7 @@ class Discount extends ActiveRecord
     public function save($runValidation = true, $attributeNames = null) : bool
     {
         if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Discount saving error.');
+            throw new SavingErrorException('Discount saving error.');
         }
 
         return true;
@@ -83,7 +85,7 @@ class Discount extends ActiveRecord
     public function delete() : bool
     {
         if (!parent::delete()) {
-            throw new \DomainException('Discount removing error.');
+            throw new DeleteErrorException('Discount deleting error.');
         }
 
         return true;

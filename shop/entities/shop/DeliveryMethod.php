@@ -3,6 +3,8 @@
 namespace shop\entities\shop;
 
 use shop\entities\shop\queries\DeliveryMethodQuery;
+use shop\exceptions\DeleteErrorException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveRecord;
 
 /**
@@ -49,7 +51,7 @@ class DeliveryMethod extends ActiveRecord
     public function save($runValidation = true, $attributeNames = null) : bool
     {
         if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('DeliveryMethod saving error.');
+            throw new SavingErrorException('DeliveryMethod saving error.');
         }
 
         return true;
@@ -58,7 +60,7 @@ class DeliveryMethod extends ActiveRecord
     public function delete() : bool
     {
         if (!parent::delete()) {
-            throw new \DomainException('DeliveryMethod removing error.');
+            throw new DeleteErrorException('DeliveryMethod deleting error.');
         }
 
         return true;

@@ -4,6 +4,8 @@ namespace shop\entities\blog;
 
 use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
+use shop\exceptions\DeleteErrorException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveRecord;
 
 /**
@@ -66,7 +68,7 @@ class Category extends ActiveRecord
     public function save($runValidation = true, $attributeNames = null) : bool
     {
         if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Category saving error.');
+            throw new SavingErrorException('Category saving error.');
         }
 
         return true;
@@ -75,7 +77,7 @@ class Category extends ActiveRecord
     public function delete() : bool
     {
         if (!parent::delete()) {
-            throw new \DomainException('Category removing error.');
+            throw new DeleteErrorException('Category deleting error.');
         }
 
         return true;

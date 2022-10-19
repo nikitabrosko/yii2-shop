@@ -3,7 +3,9 @@
 namespace shop\entities\user;
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
+use shop\exceptions\DeleteErrorException;
 use shop\exceptions\NotFoundException;
+use shop\exceptions\SavingErrorException;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -349,5 +351,23 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public function save($runValidation = true, $attributeNames = null) : bool
+    {
+        if (!parent::save($runValidation, $attributeNames)) {
+            throw new SavingErrorException('User saving error.');
+        }
+
+        return true;
+    }
+
+    public function delete() : bool
+    {
+        if (!parent::delete()) {
+            throw new DeleteErrorException('User deleting error.');
+        }
+
+        return true;
     }
 }

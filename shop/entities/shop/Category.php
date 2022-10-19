@@ -6,6 +6,8 @@ use paulzi\nestedsets\NestedSetsBehavior;
 use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\shop\queries\CategoryQuery;
+use shop\exceptions\DeleteErrorException;
+use shop\exceptions\SavingErrorException;
 use yii\db\ActiveRecord;
 
 /**
@@ -58,24 +60,6 @@ class Category extends ActiveRecord
         return '{{%shop_categories}}';
     }
 
-    public function save($runValidation = true, $attributeNames = null) : bool
-    {
-        if (!parent::save($runValidation, $attributeNames)) {
-            throw new \DomainException('Category saving error.');
-        }
-
-        return true;
-    }
-
-    public function delete() : bool
-    {
-        if (!parent::delete()) {
-            throw new \DomainException('Category removing error.');
-        }
-
-        return true;
-    }
-
     public function behaviors() : array
     {
         return [
@@ -107,5 +91,23 @@ class Category extends ActiveRecord
     public function getHeadingTile() : string
     {
         return $this->title ?: $this->name;
+    }
+
+    public function save($runValidation = true, $attributeNames = null) : bool
+    {
+        if (!parent::save($runValidation, $attributeNames)) {
+            throw new SavingErrorException('Category saving error.');
+        }
+
+        return true;
+    }
+
+    public function delete() : bool
+    {
+        if (!parent::delete()) {
+            throw new DeleteErrorException('Category deleting error.');
+        }
+
+        return true;
     }
 }
