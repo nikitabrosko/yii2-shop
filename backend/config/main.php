@@ -50,6 +50,7 @@ return [
                 'httpOnly' => true,
                 'domain' => $params['cookieDomain'],
             ],
+            'loginUrl' => ['auth/login'],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -78,13 +79,14 @@ return [
     'as access' => [
         'class' => 'yii\filters\AccessControl',
         'except' => [
-            'site/login',
+            'auth/login',
+            'auth/logout',
             'site/error',
         ],
         'rules' => [
             [
                 'allow' => true,
-                'roles' => ['@'],
+                'roles' => ['admin'],
             ],
         ],
     ],
