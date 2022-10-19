@@ -33,7 +33,8 @@
         "mihaildev/yii2-ckeditor": "^1.0",
         "mihaildev/yii2-elfinder": "^1.4",
         "fishvision/yii2-migrate": "^1.0",
-      "ext-json": "*"
+      "ext-json": "*",
+        "filsh/yii2-oauth2-server": "^2.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

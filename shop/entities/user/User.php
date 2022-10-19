@@ -7,11 +7,9 @@ use shop\exceptions\DeleteErrorException;
 use shop\exceptions\NotFoundException;
 use shop\exceptions\SavingErrorException;
 use Yii;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
 
 /**
  * user model
@@ -31,7 +29,7 @@ use yii\web\IdentityInterface;
  * @property Network[] $networks
  * @property WishlistItem[] $wishlistItems
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord
 {
     public const STATUS_DELETED = 0;
     public const STATUS_INACTIVE = 9;
@@ -188,22 +186,6 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public static function findIdentity($id)
-    {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
-    }
-
-    /**
      * Finds user by username
      *
      * @param string $username
@@ -274,30 +256,6 @@ class User extends ActiveRecord implements IdentityInterface
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId()
-    {
-        return $this->getPrimaryKey();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-        return $this->auth_key;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->getAuthKey() === $authKey;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace shop\services\auth;
 
+use common\auth\Identity;
 use shop\entities\user\User;
 use shop\forms\auth\LoginForm;
 use shop\exceptions\NotFoundException;
@@ -33,7 +34,7 @@ class LoginService
     public function login(LoginForm $form) : bool
     {
         if ($form->validate() && $this->validatePassword($form)) {
-            return Yii::$app->user->login($this->getUser($form->username), $form->rememberMe ? 3600 * 24 * 30 : 0);
+            return Yii::$app->user->login(new Identity($this->getUser($form->username)), $form->rememberMe ? 3600 * 24 * 30 : 0);
         }
 
         return false;
