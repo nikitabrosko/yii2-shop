@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'username')->textInput() ?>
     <?= $form->field($model, 'email')->textInput() ?>
     <?= $form->field($model, 'password')->textInput() ?>
+    <?= $form->field($model, 'role')->dropDownList($model->rolesList()) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

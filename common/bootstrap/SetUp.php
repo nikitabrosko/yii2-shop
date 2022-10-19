@@ -16,6 +16,7 @@ use yii\base\BootstrapInterface;
 use yii\caching\Cache;
 use yii\di\Instance;
 use yii\mail\MailerInterface;
+use yii\rbac\ManagerInterface;
 
 class SetUp implements BootstrapInterface {
 
@@ -52,5 +53,9 @@ class SetUp implements BootstrapInterface {
         $container->set(CKEditor::class, [
             'editorOptions' => ElFinder::ckeditorOptions('elfinder'),
         ]);
+
+        $container->setSingleton(ManagerInterface::class, function () use ($app) {
+            return $app->authManager;
+        });
     }
 }

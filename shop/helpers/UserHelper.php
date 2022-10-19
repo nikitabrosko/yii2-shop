@@ -2,7 +2,9 @@
 
 namespace shop\helpers;
 
+use shop\access\Rbac;
 use shop\entities\user\User;
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -37,5 +39,10 @@ class UserHelper
         return Html::tag('span', ArrayHelper::getValue(self::statusList(), $status), [
             'class' => $class,
         ]);
+    }
+
+    public static function getRolesOf($userId) : string
+    {
+        return implode(', ', ArrayHelper::getColumn(Yii::$app->authManager->getRolesByUser($userId), 'description'));
     }
 }

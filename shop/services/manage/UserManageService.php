@@ -3,12 +3,28 @@
 namespace shop\services\manage;
 
 use shop\entities\user\User;
+use shop\exceptions\DeleteErrorException;
 use shop\exceptions\NotFoundException;
+use shop\exceptions\SavingErrorException;
 use shop\forms\manage\user\UserCreateForm;
 use shop\forms\manage\user\UserEditForm;
+use shop\services\RoleManager;
+use shop\services\TransactionManager;
+use yii\mail\MailerInterface;
 
 class UserManageService
 {
+    private $roleManager;
+    private $transactionManager;
+
+    public function __construct(
+        RoleManager $roleManager,
+        TransactionManager $transactionManager)
+    {
+        $this->roleManager = $roleManager;
+        $this->transactionManager = $transactionManager;
+    }
+
     public function create(UserCreateForm $form) : User
     {
         $user = User::create(
@@ -17,9 +33,10 @@ class UserManageService
             $form->password
         );
 
-        if (!$user->save()) {
-            throw new \DomainException('Save error.');
-        }
+        $this->transactionManager->wrap(function () use ($user, $form) {
+            $user->save();
+            $this->roleManager->assign($user->id, $form->role);
+        });
 
         return $user;
     }
@@ -35,9 +52,15 @@ class UserManageService
             $form->email
         );
 
-        if (!$user->save()) {
-            throw new \DomainException('Save error.');
-        }
+        $this->transactionManager->wrap(function () use ($user, $form) {
+            $user->save();
+            $this->roleManager->assign($user->id, $form->role);
+        });
+    }
+
+    public function remove($id)
+    {
+        $this->getUserById($id)->delete();
     }
 
     public function activate($id): void

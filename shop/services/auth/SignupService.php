@@ -2,7 +2,10 @@
 
 namespace shop\services\auth;
 
+use shop\access\Rbac;
 use shop\forms\auth\ResendVerificationEmailForm;
+use shop\services\RoleManager;
+use shop\services\TransactionManager;
 use Yii;
 use shop\entities\user\User;
 use shop\forms\auth\SignupForm;
@@ -12,10 +15,17 @@ use yii\mail\MailerInterface;
 class SignupService
 {
     private $mailer;
+    private $roleManager;
+    private $transactionManager;
 
-    public function __construct(MailerInterface $mailer)
+    public function __construct(
+        MailerInterface $mailer,
+        RoleManager $roleManager,
+        TransactionManager $transactionManager)
     {
         $this->mailer = $mailer;
+        $this->roleManager = $roleManager;
+        $this->transactionManager = $transactionManager;
     }
 
     /**
@@ -27,9 +37,13 @@ class SignupService
     {
         $user = User::signup($form->username, $form->email, $form->password);
 
-        if (!$user->save()) {
-            throw new \DomainException('Sorry, we are unable to sign you up.');
-        }
+        $this->transactionManager->wrap(function () use ($user) {
+            if (!$user->save()) {
+                throw new \DomainException('Sorry, we are unable to sign you up.');
+            }
+
+            $this->roleManager->assign($user->id, Rbac::ROLE_USER);
+        });
 
         if (!$this
             ->mailer

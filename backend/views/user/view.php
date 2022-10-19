@@ -1,6 +1,8 @@
 <?php
 
+use shop\entities\user\User;
 use shop\helpers\UserHelper;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -41,9 +43,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'attribute' => 'status',
                         'filter' => UserHelper::statusList(),
-                        'value' => function (\shop\entities\user\User $user) {
+                        'value' => function (User $user) {
                             return UserHelper::statusLabel($user->status);
                         },
+                        'format' => 'raw',
+                    ],
+                    [
+                        'label' => 'Role',
+                        'value' => UserHelper::getRolesOf($model->id),
                         'format' => 'raw',
                     ],
                     'created_at:datetime',
