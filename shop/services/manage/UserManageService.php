@@ -58,6 +58,11 @@ class UserManageService
         });
     }
 
+    public function assignRole($id, $role)
+    {
+        $this->roleManager->assign($this->getUserById($id)->id, $role);
+    }
+
     public function remove($id)
     {
         $this->getUserById($id)->delete();
