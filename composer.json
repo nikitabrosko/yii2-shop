@@ -31,7 +31,8 @@
       "ext-gd": "*",
         "yii-cms/yii2-robokassa": "^1.3",
         "mihaildev/yii2-ckeditor": "^1.0",
-        "mihaildev/yii2-elfinder": "^1.4"
+        "mihaildev/yii2-elfinder": "^1.4",
+        "fishvision/yii2-migrate": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
