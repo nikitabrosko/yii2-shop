@@ -1,6 +1,6 @@
 <?php
 
-namespace api\controllers\user;
+namespace api\controllers\shop;
 
 use shop\cart\Cart;
 use shop\forms\shop\order\OrderForm;

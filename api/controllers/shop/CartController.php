@@ -1,6 +1,6 @@
 <?php
 
-namespace api\controllers\user;
+namespace api\controllers\shop;
 
 use shop\cart\CartItem;
 use shop\cart\cost\Discount;
@@ -95,6 +95,7 @@ class CartController extends Controller
         }
 
         $form = new AddToCartForm($product);
+
         $form->load(Yii::$app->request->getBodyParams(), '');
 
         if ($form->validate()) {

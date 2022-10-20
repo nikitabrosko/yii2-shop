@@ -1,6 +1,6 @@
 <?php
 
-namespace api\controllers\user;
+namespace api\controllers\shop;
 
 use api\providers\MapDataProvider;
 use shop\entities\shop\product\Product;
