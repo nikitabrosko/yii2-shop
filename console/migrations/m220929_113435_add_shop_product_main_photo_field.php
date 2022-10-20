@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m220929_111509_add_shop_product_main_photo_field
+ * Class m220929_113435_add_shop_product_main_photo_field
  */
-class m220929_111509_add_shop_product_main_photo_field extends Migration
+class m220929_113435_add_shop_product_main_photo_field extends Migration
 {
     /**
      * {@inheritdoc}
