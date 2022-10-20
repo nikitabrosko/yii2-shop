@@ -8,6 +8,7 @@ use shop\cart\Cart;
 use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\storage\CookieStorage;
+use shop\cart\storage\HybridStorage;
 use shop\cart\storage\SessionStorage;
 use shop\services\auth\PasswordResetService;
 use shop\services\auth\SignupService;
@@ -43,9 +44,9 @@ class SetUp implements BootstrapInterface {
             return $app->cache;
         });
 
-        $container->setSingleton(Cart::class, function () {
+        $container->setSingleton(Cart::class, function () use ($app) {
             return new Cart(
-                new CookieStorage('cart', strtotime('+1 year', time())),
+                new HybridStorage($app->get('user'), 'cart', 3600 * 24, $app->db),
                 new DynamicCost(new SimpleCost())
             );
         });
