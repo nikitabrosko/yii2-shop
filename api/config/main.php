@@ -13,6 +13,7 @@ return [
         '@staticRoot' => $params['staticPath'],
         '@static' => $params['staticHostInfo'],
     ],
+    'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'controllerNamespace' => 'api\controllers',
     'bootstrap' => [
         'log',
