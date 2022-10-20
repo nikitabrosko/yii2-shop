@@ -47,6 +47,54 @@ abstract class CompositeForm extends Model
         return $result;
     }
 
+    public function hasErrors($attribute = null): bool
+    {
+        if ($attribute !== null) {
+            return parent::hasErrors($attribute);
+        }
+
+        if (parent::hasErrors($attribute)) {
+            return true;
+        }
+
+        foreach ($this->forms as $form) {
+            if (is_array($form)) {
+                foreach ($form as $item) {
+                    if ($item->hasErrors()) {
+                        return true;
+                    }
+                }
+            } else {
+                if ($form->hasErrors()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public function getFirstErrors(): array
+    {
+        $errors = parent::getFirstErrors();
+
+        foreach ($this->forms as $name => $form) {
+            if (is_array($form)) {
+                foreach ($form as $i => $item) {
+                    foreach ($item->getFirstErrors() as $attribute => $error) {
+                        $errors[$name . '.' . $i . '.' . $attribute] = $error;
+                    }
+                }
+            } else {
+                foreach ($form->getFirstErrors() as $attribute => $error) {
+                    $errors[$name . '.' . $attribute] = $error;
+                }
+            }
+        }
+
+        return $errors;
+    }
+
     public function __get($name)
     {
         return $this->forms[$name] ?? parent::__get($name);
