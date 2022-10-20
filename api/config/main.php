@@ -79,13 +79,25 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
+                'profile' => 'user/profile/index',
                 'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
+
+                'GET shop/products/<id:\d+>' => 'shop/product/view',
+                'GET shop/products/category/<id:\d+>' => 'shop/product/category',
+                'GET shop/products/brand/<id:\d+>' => 'shop/product/brand',
+                'GET shop/products/tag/<id:\d+>' => 'shop/product/tag',
+                'GET shop/products' => 'shop/product/index',
+                'shop/products/<id:\d+>/cart' => 'shop/cart/add',
+                'shop/products/<id:\d+>/wish' => 'shop/wishlist/add',
+
+                'GET shop/wishlist' => 'shop/wishlist/index',
+                'DELETE shop/wishlist/<id:\d+>' => 'shop/wishlist/delete',
             ],
         ],
     ],
     'as authenticator' => [
         'class' => 'filsh\yii2\oauth2server\filters\auth\CompositeAuth',
-        'except' => ['site/index', 'oauth2/rest/token'],
+        'except' => ['site/index', 'oauth2/rest/token', 'shop/product/index', 'shop/product/view'],
         'authMethods' => [
             ['class' => 'yii\filters\auth\HttpBearerAuth'],
             ['class' => 'yii\filters\auth\QueryParamAuth', 'tokenParam' => 'accessToken'],
@@ -93,7 +105,7 @@ return [
     ],
     'as access' => [
         'class' => 'yii\filters\AccessControl',
-        'except' => ['site/index', 'oauth2/rest/token'],
+        'except' => ['site/index', 'oauth2/rest/token', 'shop/product/index', 'shop/product/view'],
         'rules' => [
             [
                 'allow' => true,
