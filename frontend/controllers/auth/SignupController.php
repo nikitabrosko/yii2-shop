@@ -2,6 +2,7 @@
 
 namespace frontend\controllers\auth;
 
+use common\auth\Identity;
 use shop\forms\auth\ResendVerificationEmailForm;
 use shop\forms\auth\SignupForm;
 use shop\services\auth\SignupService;
@@ -73,12 +74,14 @@ class SignupController extends Controller
     public function actionVerifyEmail(string $token) : yii\web\Response
     {
         try {
-            if (($user = $this->signupService->verifyEmail($token)) && Yii::$app->user->login($user)) {
+            if (($user = $this->signupService->verifyEmail($token)) && Yii::$app->user->login(new Identity($user))) {
                 Yii::$app->session->setFlash('success', 'Your email has been confirmed!');
+
                 return $this->goHome();
             }
         } catch (InvalidArgumentException|\DomainException $e) {
             Yii::$app->errorHandler->logException($e);
+
             throw new BadRequestHttpException($e->getMessage());
         }
 
@@ -95,6 +98,7 @@ class SignupController extends Controller
             try {
                 if ($this->signupService->resendVerificationEmail($form)) {
                     Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+
                     return $this->goHome();
                 }
 
