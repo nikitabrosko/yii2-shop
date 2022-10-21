@@ -20,6 +20,8 @@ class OrderReadRepository
 
     public function findOwn($userId, $id)
     {
-        return Order::find()->andWhere(['user_id' => $userId, 'id' => $id])->one();
+        return Order::find()
+            ->andWhere(['user_id' => $userId, 'id' => $id])
+            ->one();
     }
 }

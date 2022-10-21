@@ -8,7 +8,9 @@ class CategoryReadRepository
 {
     public function getAll(): array
     {
-        return Category::find()->orderBy('sort')->all();
+        return Category::find()
+            ->orderBy('sort')
+            ->all();
     }
 
     public function find($id): ?Category
@@ -18,6 +20,8 @@ class CategoryReadRepository
 
     public function findBySlug($slug): ?Category
     {
-        return Category::find()->andWhere(['slug' => $slug])->one();
+        return Category::find()
+            ->andWhere(['slug' => $slug])
+            ->one();
     }
 }

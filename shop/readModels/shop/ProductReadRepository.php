@@ -146,7 +146,10 @@ class ProductReadRepository
 
     public function search(SearchForm $form): DataProviderInterface
     {
-        $query = Product::find()->alias('p')->active('p')->with('mainPhoto', 'category');
+        $query = Product::find()
+            ->alias('p')
+            ->active('p')
+            ->with('mainPhoto', 'category');
 
         if ($form->brand) {
             $query->andWhere(['p.brand_id' => $form->brand]);

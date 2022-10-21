@@ -18,7 +18,10 @@ class CategoryReadRepository
 
     public function getAll() : array
     {
-        return Category::find()->andWhere(['>', 'depth', 0])->orderBy('lft')->all();
+        return Category::find()
+            ->andWhere(['>', 'depth', 0])
+            ->orderBy('lft')
+            ->all();
     }
 
     public function find($id) : ?Category
@@ -31,12 +34,17 @@ class CategoryReadRepository
 
     public function findBySlug($slug) : ?Category
     {
-        return Category::find()->andWhere(['slug' => $slug])->andWhere(['>', 'depth', 0])->one();
+        return Category::find()
+            ->andWhere(['slug' => $slug])
+            ->andWhere(['>', 'depth', 0])
+            ->one();
     }
 
     public function getTreeWithSubsOf(Category $category = null): array
     {
-        $query = Category::find()->andWhere(['>', 'depth', 0])->orderBy('lft');
+        $query = Category::find()
+            ->andWhere(['>', 'depth', 0])
+            ->orderBy('lft');
 
         if ($category) {
             $criteria = ['or', ['depth' => 1]];

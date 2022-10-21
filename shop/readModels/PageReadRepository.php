@@ -13,11 +13,16 @@ class PageReadRepository
 
     public function findBySlug($slug) : ?Page
     {
-        return Page::find()->andWhere(['slug' => $slug])->andWhere(['>', 'depth', 0])->one();
+        return Page::find()
+            ->andWhere(['slug' => $slug])
+            ->andWhere(['>', 'depth', 0])
+            ->one();
     }
 
     public function getAll() : array
     {
-        return Page::find()->andWhere(['>', 'depth', 0])->all();
+        return Page::find()
+            ->andWhere(['>', 'depth', 0])
+            ->all();
     }
 }

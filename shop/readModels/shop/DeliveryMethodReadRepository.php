@@ -8,6 +8,8 @@ class DeliveryMethodReadRepository
 {
     public function getAll(): array
     {
-        return DeliveryMethod::find()->orderBy('sort')->all();
+        return DeliveryMethod::find()
+            ->orderBy('sort')
+            ->all();
     }
 }
