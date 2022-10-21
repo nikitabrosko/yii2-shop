@@ -13,6 +13,8 @@ return [
         'auth/signup/<_a:[\w-]+>' => 'auth/signup/<_a>',
         'auth/reset' => 'auth/reset/request',
 
+        ['pattern' => 'yandex-market', 'route' => 'market/index', 'suffix' => '.xml'],
+
         'cabinet' => 'cabinet/default/cabinet',
         'wishlist' => 'cabinet/wishlist/wishlist',
         'cabinet/<_c:[\w\-]+>' => 'cabinet/<_c>/cabinet',

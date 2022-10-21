@@ -13,6 +13,8 @@ use shop\cart\storage\SessionStorage;
 use shop\services\auth\PasswordResetService;
 use shop\services\auth\SignupService;
 use shop\services\contact\ContactService;
+use shop\services\yandex\ShopInfo;
+use shop\services\yandex\YandexMarket;
 use yii\base\BootstrapInterface;
 use yii\caching\Cache;
 use yii\di\Instance;
@@ -58,5 +60,9 @@ class SetUp implements BootstrapInterface {
         $container->setSingleton(ManagerInterface::class, function () use ($app) {
             return $app->authManager;
         });
+
+        $container->setSingleton(YandexMarket::class, [], [
+            new ShopInfo($app->name, $app->name, $app->params['frontendHostInfo']),
+        ]);
     }
 }
