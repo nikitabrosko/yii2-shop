@@ -16,6 +16,11 @@ class CategoryReadRepository
             ->one();
     }
 
+    public function getAll() : array
+    {
+        return Category::find()->andWhere(['>', 'depth', 0])->orderBy('lft')->all();
+    }
+
     public function find($id) : ?Category
     {
         return Category::find()
