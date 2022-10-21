@@ -6,7 +6,7 @@ use shop\entities\user\User;
 use backend\forms\UserSearch;
 use shop\forms\manage\user\UserCreateForm;
 use shop\forms\manage\user\UserEditForm;
-use shop\services\manage\UserManageService;
+use shop\useCases\manage\UserManageService;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

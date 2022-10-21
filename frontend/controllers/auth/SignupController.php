@@ -5,7 +5,7 @@ namespace frontend\controllers\auth;
 use common\auth\Identity;
 use shop\forms\auth\ResendVerificationEmailForm;
 use shop\forms\auth\SignupForm;
-use shop\services\auth\SignupService;
+use shop\useCases\auth\SignupService;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
@@ -18,7 +18,7 @@ class SignupController extends Controller
 
     private $signupService;
 
-    public function __construct($id, $module, SignupService $signupService, $config = [])
+    public function __construct($id, $module, \shop\useCases\auth\SignupService $signupService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->signupService = $signupService;

@@ -4,7 +4,7 @@ namespace frontend\controllers\auth;
 
 use shop\forms\auth\PasswordResetRequestForm;
 use shop\forms\auth\ResetPasswordForm;
-use shop\services\auth\PasswordResetService;
+use shop\useCases\auth\PasswordResetService;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\filters\AccessControl;
@@ -18,7 +18,7 @@ class ResetController extends Controller
 
     private $passwordResetService;
 
-    public function __construct($id, $module, PasswordResetService $passwordResetService, $config = [])
+    public function __construct($id, $module, \shop\useCases\auth\PasswordResetService $passwordResetService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->passwordResetService = $passwordResetService;

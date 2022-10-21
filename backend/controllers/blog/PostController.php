@@ -3,7 +3,7 @@
 namespace backend\controllers\blog;
 
 use shop\forms\manage\blog\post\PostForm;
-use shop\services\manage\blog\postManageService;
+use shop\useCases\manage\blog\postManageService;
 use Yii;
 use shop\entities\blog\Post\Post;
 use backend\forms\blog\PostSearch;
@@ -15,7 +15,7 @@ class PostController extends Controller
 {
     private $postManageService;
 
-    public function __construct($id, $module, PostManageService $postManageService, $config = [])
+    public function __construct($id, $module, \shop\useCases\manage\blog\PostManageService $postManageService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->postManageService = $postManageService;

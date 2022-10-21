@@ -5,7 +5,7 @@ namespace backend\controllers\shop;
 use shop\entities\shop\product\Modification;
 use shop\entities\shop\product\Product;
 use shop\forms\manage\shop\product\ModificationForm;
-use shop\services\manage\shop\ProductManageService;
+use shop\useCases\manage\shop\ProductManageService;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -15,7 +15,7 @@ class ModificationController extends Controller
 {
     private $productManageService;
 
-    public function __construct($id, $module, ProductManageService $productManageService, $config = [])
+    public function __construct($id, $module, \shop\useCases\manage\shop\ProductManageService $productManageService, $config = [])
     {
         parent::__construct($id, $module, $config);
 

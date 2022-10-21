@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use shop\forms\contact\ContactForm;
-use shop\services\contact\ContactService;
+use shop\useCases\contact\ContactService;
 use Yii;
 use yii\web\Controller;
 

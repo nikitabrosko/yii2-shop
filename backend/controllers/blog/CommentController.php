@@ -4,7 +4,7 @@ namespace backend\controllers\blog;
 
 use backend\forms\blog\CommentSearch;
 use shop\forms\manage\blog\post\CommentEditForm;
-use shop\services\manage\blog\CommentManageService;
+use shop\useCases\manage\blog\CommentManageService;
 use Yii;
 use shop\entities\blog\post\Post;
 use yii\web\Controller;
@@ -15,7 +15,7 @@ class CommentController extends Controller
 {
     private $commentManageService;
 
-    public function __construct($id, $module, CommentManageService $commentManageService, $config = [])
+    public function __construct($id, $module, \shop\useCases\manage\blog\CommentManageService $commentManageService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->commentManageService = $commentManageService;

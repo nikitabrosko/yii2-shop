@@ -5,7 +5,7 @@ namespace backend\controllers\shop;
 use backend\forms\shop\OrderSearch;
 use shop\entities\shop\order\Order;
 use shop\forms\manage\shop\order\OrderEditForm;
-use shop\services\manage\shop\OrderManageService;
+use shop\useCases\manage\shop\OrderManageService;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -15,7 +15,7 @@ class OrderController extends Controller
 {
     private $orderManageService;
 
-    public function __construct($id, $module, OrderManageService $orderManageService, $config = [])
+    public function __construct($id, $module, \shop\useCases\manage\shop\OrderManageService $orderManageService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->orderManageService = $orderManageService;

@@ -5,7 +5,7 @@ namespace backend\controllers\shop;
 use shop\entities\shop\Brand;
 use backend\forms\shop\BrandSearch;
 use shop\forms\manage\shop\BrandForm;
-use shop\services\manage\shop\BrandManageService;
+use shop\useCases\manage\shop\BrandManageService;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,7 +18,7 @@ class BrandController extends Controller
 {
     private $brandManageService;
 
-    public function __construct($id, $module, BrandManageService $brandManageService, $config = [])
+    public function __construct($id, $module, \shop\useCases\manage\shop\BrandManageService $brandManageService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->brandManageService = $brandManageService;

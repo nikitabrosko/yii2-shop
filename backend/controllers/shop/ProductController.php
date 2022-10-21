@@ -11,7 +11,7 @@ use shop\forms\manage\shop\product\ProductCreateForm;
 use shop\forms\manage\shop\product\ProductEditForm;
 use shop\forms\manage\shop\product\QuantityForm;
 use shop\forms\manage\shop\product\TagsForm;
-use shop\services\manage\shop\ProductManageService;
+use shop\useCases\manage\shop\ProductManageService;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -25,7 +25,7 @@ class ProductController extends Controller
 {
     private $productManageService;
 
-    public function __construct($id, $module, ProductManageService $productManageService, $config = [])
+    public function __construct($id, $module, \shop\useCases\manage\shop\ProductManageService $productManageService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->productManageService = $productManageService;

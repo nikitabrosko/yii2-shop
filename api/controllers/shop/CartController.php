@@ -6,7 +6,7 @@ use shop\cart\CartItem;
 use shop\cart\cost\Discount;
 use shop\forms\shop\AddToCartForm;
 use shop\readModels\shop\ProductReadRepository;
-use shop\services\shop\CartService;
+use shop\useCases\shop\CartService;
 use Yii;
 use yii\helpers\Url;
 use yii\rest\Controller;
@@ -18,7 +18,7 @@ class CartController extends Controller
     private $products;
     private $service;
 
-    public function __construct($id, $module, CartService $service, ProductReadRepository $products, $config = [])
+    public function __construct($id, $module, \shop\useCases\shop\CartService $service, ProductReadRepository $products, $config = [])
     {
         parent::__construct($id, $module, $config);
 

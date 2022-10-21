@@ -5,7 +5,7 @@ namespace backend\controllers\shop;
 use shop\entities\shop\Category;
 use backend\forms\shop\CategorySearch;
 use shop\forms\manage\shop\CategoryForm;
-use shop\services\manage\shop\CategoryManageService;
+use shop\useCases\manage\shop\CategoryManageService;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,7 +18,7 @@ class CategoryController extends Controller
 {
     private $categoryManageService;
 
-    public function __construct($id, $module, CategoryManageService $categoryManageService, $config = [])
+    public function __construct($id, $module, \shop\useCases\manage\shop\CategoryManageService $categoryManageService, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->categoryManageService = $categoryManageService;

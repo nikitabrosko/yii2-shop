@@ -5,7 +5,7 @@ namespace backend\controllers\shop;
 use backend\forms\shop\DiscountSearch;
 use shop\entities\shop\Discount;
 use shop\forms\manage\shop\DiscountForm;
-use shop\services\manage\shop\DiscountManageService;
+use shop\useCases\manage\shop\DiscountManageService;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

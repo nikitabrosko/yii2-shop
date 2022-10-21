@@ -3,7 +3,7 @@
 namespace frontend\controllers\auth;
 
 use shop\forms\auth\LoginForm;
-use shop\services\auth\LoginService;
+use shop\useCases\auth\LoginService;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
