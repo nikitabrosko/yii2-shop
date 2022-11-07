@@ -20,6 +20,7 @@ use yii\db\ActiveRecord;
  * @property string $password_reset_token
  * @property string $verification_token
  * @property string $email
+ * @property string $phone
  * @property string $auth_key
  * @property integer $status
  * @property integer $created_at
@@ -35,11 +36,12 @@ class User extends ActiveRecord
     public const STATUS_INACTIVE = 9;
     public const STATUS_ACTIVE = 10;
 
-    public static function create(string $username, string $email, string $password): self
+    public static function create(string $username, string $email, string $phone, string $password): self
     {
         $user = new self();
         $user->username = $username;
         $user->email = $email;
+        $user->phone = $phone;
         $user->setPassword(!empty($password) ? $password : Yii::$app->security->generateRandomString());
         $user->status = self::STATUS_ACTIVE;
         $user->generateAuthKey();
@@ -68,10 +70,18 @@ class User extends ActiveRecord
         return $user;
     }
 
-    public function edit(string $username, string $email)
+    public function edit(string $username, string $email, string $phone)
     {
         $this->username = $username;
         $this->email = $email;
+        $this->phone = $phone;
+        $this->updated_at = time();
+    }
+
+    public function editProfile(string $email, string $phone): void
+    {
+        $this->email = $email;
+        $this->phone = $phone;
         $this->updated_at = time();
     }
 
