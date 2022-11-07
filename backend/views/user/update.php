@@ -18,6 +18,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $form->field($model, 'username')->textInput() ?>
     <?= $form->field($model, 'email')->textInput() ?>
+    <?= $form->field($model, 'phone')->textInput(['maxLength' => true]) ?>
     <?= $form->field($model, 'role')->dropDownList($model->rolesList()) ?>
 
     <div class="form-group">

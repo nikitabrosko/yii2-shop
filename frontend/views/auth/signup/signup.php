@@ -5,7 +5,7 @@
 /** @var \shop\forms\auth\SignupForm $model */
 
 use yii\bootstrap4\Html;
-use yii\bootstrap4\ActiveForm;
+use kartik\form\ActiveForm;
 
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
@@ -23,6 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
                 <div class="mb-3">
                     <?= $form->field($model, 'email') ?>
+                </div>
+
+                <div class="mb-3">
+                    <?= $form->field($model, 'phone', ['addon' => ['prepend' => ['content'=>'+']]])->textInput(['maxLength' => true]) ?>
                 </div>
 
                 <div class="mb-3">

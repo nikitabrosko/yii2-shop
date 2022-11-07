@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model, 'username')->textInput() ?>
     <?= $form->field($model, 'email')->textInput() ?>
+    <?= $form->field($model, 'phone')->textInput(['maxLength' => true]) ?>
     <?= $form->field($model, 'password')->textInput() ?>
     <?= $form->field($model, 'role')->dropDownList($model->rolesList()) ?>
 
