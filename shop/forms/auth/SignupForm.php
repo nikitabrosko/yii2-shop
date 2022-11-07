@@ -12,8 +12,8 @@ class SignupForm extends Model
 {
     public $username;
     public $email;
+    public $phone;
     public $password;
-
 
     /**
      * {@inheritdoc}
@@ -34,6 +34,9 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+
+            ['phone', 'required'],
+            ['phone', 'integer'],
         ];
     }
 }
